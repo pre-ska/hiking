@@ -259,3 +259,61 @@ exports.getTourStats = async (req, res) => {
     });
   }
 };
+
+//8-22
+exports.getMonthlyPlan = async (req, res) => {
+  try {
+    const year = req.params.year * 1;
+
+    const plan = await Tour.aggregate([
+      {
+        // svaka tura ima vise startDates
+        // unwind ce kreirati nove ture za svaki pojedini startDates u arrayu
+        $unwind: '$startDates'
+      },
+      {
+        //dohvati samo one koji su u danoj godini...
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`)
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { $month: '$startDates' }, // razvrstaj ih po mjesecima
+          numOfTourStarts: { $sum: 1 }, //doda 1 za svaku postojeću turu iz filtera...zbroji ih
+          tours: { $push: '$name' } // kreira polje tours koje je array i push u njega ime ture za svaki mjesec
+        }
+      },
+      {
+        $addFields: { month: '$_id' } // doda novo polje i poveze ga sa vrijednosti polja _id
+      },
+      {
+        $project: {
+          _id: 0 // koja polja ce se prikazati, 1- hoce, 0 -nece
+        }
+      },
+      {
+        $sort: { numOfTourStarts: -1 } // poredaj silazno po numOfTourStarts
+      },
+      {
+        $limit: 12 // limitira broj rezultata
+      }
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        alo: 'alo',
+        plan
+      }
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'fail',
+      message: error
+    });
+  }
+};

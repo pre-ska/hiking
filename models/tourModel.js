@@ -55,7 +55,7 @@ const tourSchema = new mongoose.Schema({
     default: Date.now(),
     select: false // ovo je da nikada ne prikaze na klijentskoj strani ovo polje... za sakrit nesto
   },
-  startDate: [Date]
+  startDates: [Date]
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
