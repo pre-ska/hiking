@@ -1,4 +1,5 @@
 const Tour = require('../models/tourModel'); // 8-7
+const APIFeatures = require('../utils/apiFeatures'); //8-20
 
 // const tours = JSON.parse(
 //   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
@@ -41,64 +42,6 @@ exports.aliasTopTours = (req, res, next) => {
 
   next();
 };
-
-//8-20
-// grupiranje svih metoda u jednu klasu
-class APIFeatures {
-  constructor(query, queryString) {
-    this.query = query;
-    this.queryString = queryString;
-  }
-
-  //sve ove metode su prije napravljene dolje nize
-
-  filter() {
-    const queryObj = { ...this.queryString };
-    const excludedFields = ['page', 'sort', 'limit', 'fields'];
-    excludedFields.forEach(el => delete queryObj[el]);
-
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-
-    this.query = this.query.find(JSON.parse(queryStr));
-
-    return this;
-  }
-
-  sort() {
-    if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.replace(/,/g, ' ');
-      //ako ima sorting u query stringu, lancano ga povezi na postojeci query
-
-      this.query = this.query.sort(sortBy);
-    } else {
-      this.query = this.query.sort('-createdAt');
-    }
-
-    return this;
-  }
-
-  limitFields() {
-    if (this.queryString.fields) {
-      const fields = this.queryString.fields.replace(/,/g, ' ');
-      this.query = this.query.select(fields);
-    } else {
-      this.query = this.query.select('-__v'); // ovo je za excluding... nepotrebno, vise za primjer kako se radi
-    }
-
-    return this;
-  }
-
-  paginate() {
-    const page = this.queryString.page * 1 || 1; // page u query obj je string, monozenje sa 1 daje number
-    const limit = this.queryString.limit * 1 || 100;
-    const skip = (page - 1) * limit;
-
-    this.query = this.query.skip(skip).limit(limit); // metode iz mongoose
-
-    return this;
-  }
-}
 
 exports.getAllTours = async (req, res) => {
   //8-9
@@ -268,6 +211,46 @@ exports.deleteTour = async (req, res) => {
     res.status(204).json({
       status: 'success',
       data: null
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'fail',
+      message: error
+    });
+  }
+};
+
+//8-21
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
+      {
+        $match: { ratingsAverage: { $gte: 4.5 } }
+      },
+      {
+        $group: {
+          _id: { $toUpper: '$difficulty' },
+          numTours: { $sum: 1 },
+          numOfRatings: { $sum: '$ratingsQuantity' },
+          avgRating: { $avg: '$ratingsAverage' },
+          avgPrice: { $avg: '$price' },
+          minPrice: { $min: '$price' },
+          maxPrice: { $max: '$price' }
+        }
+      },
+      {
+        $sort: { avgPrice: 1 }
+      },
+      {
+        $match: { _id: { $ne: 'EASY' } }
+      }
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        stats
+      }
     });
   } catch (error) {
     res.status(404).json({
