@@ -184,7 +184,7 @@ exports.updateTour = async (req, res) => {
     // https://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
       new: true, // vrati novi dokument
-      runValidators: true
+      runValidators: true //ako je false, validatori iz modela nece se primjenjivati na update (samo na create)
     });
 
     res.status(200).json({

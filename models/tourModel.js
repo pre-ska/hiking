@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const validator = require('validator');
 
 /******************************************** */
 // schema i model
@@ -10,7 +11,10 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Tour must have a name'],
       unique: true,
-      trim: true
+      trim: true,
+      maxlength: [40, 'A tour name must have less or equal than 40 characters'],
+      minlength: [10, 'A tour name must have less or equal than 40 characters']
+      // validate: [validator.isAlpha, 'Tour name must only contain charaters']
     },
     slug: String,
     duration: {
@@ -23,11 +27,18 @@ const tourSchema = new mongoose.Schema(
     },
     difficulty: {
       type: String,
-      required: [true, 'A tour must have a difficulty']
+      required: [true, 'A tour must have a difficulty'],
+      enum: {
+        //8-27
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either easy, medium or difficult'
+      }
     },
     ratingsAverage: {
       type: Number,
-      default: 4.5
+      default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be equal or below 5.0']
     },
     ratingsQuantity: {
       type: Number,
@@ -37,7 +48,17 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'A tour must have a price']
     },
-    priceDiscount: Number,
+    priceDiscount: {
+      //8-28 custom validators
+      type: Number,
+      validate: {
+        validator: function(val) {
+          //THIS se odnosi na trenutni  dokument SAMO KADA KREIRAM NOVI dokument
+          return val < this.price;
+        },
+        message: 'Discount {{VALUE}} is not valid'
+      }
+    },
     summary: {
       type: String,
       trim: true,
