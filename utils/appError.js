@@ -5,7 +5,8 @@ class AppError extends Error {
     // parent klasa doda message u objekt
     this.statusCode = statusCode;
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
-    this.isOperational = true;
+    this.isOperational = true; // svi errori koje ka kontroliram ce biti prepoznati kao operational
+    // samo errori sa isOperational = true ce ici na client-side...a ne svi npr od biblioteka itd.
 
     Error.captureStackTrace(this, this.constructor);
   }
