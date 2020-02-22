@@ -5,6 +5,13 @@ const handleCastErrorDB = err => {
   const message = `Invalid ${err.path}: ${err.value}`;
   return new AppError(message, 400);
 };
+// 9-11
+const handleDuplicateFieldsDB = err => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  console.log(value);
+  const message = `Duplicate field value: ${value}. Please use another value`;
+  return new AppError(message, 400);
+};
 
 const sendErrorDev = (err, res) => {
   // 9-9
@@ -46,9 +53,11 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
 
-    if (error.name === 'CastError') {
-      error = handleCastErrorDB(error);
-    }
+    //9-10 error prilikom pogresnog ID-ja u DB
+    if (error.name === 'CastError') error = handleCastErrorDB(error);
+
+    //9-11 error prilikom duplog unosa (npr ime koje je UNIQUE), to je mongoDB error i hvatam ga na .code
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
 
     sendErrorProd(error, res);
   }
