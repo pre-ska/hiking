@@ -61,7 +61,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
 
-    //9-10 error prilikom pogresnog ID-ja u DB - mongoose error, mongoDB izbaci samo null ako nema taj id, prepoznajem ga na error.name
+    //9-10 error prilikom pogresnog ID-ja u DB - mongoose error, mongoDB izbaci samo null ako nema taj id, hvatam ga na error.name
     if (error.name === 'CastError') error = handleCastErrorDB(error);
 
     //9-11 error prilikom duplog unosa (npr ime koje je UNIQUE), to je mongoDB error i hvatam ga na error.code
