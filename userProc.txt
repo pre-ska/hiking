@@ -1,0 +1,15 @@
+- userModel.js
+  kreiram userSchema i User model
+
+- authController.js
+  kreiram metode User modela
+  exports.signup...async funkcija koja po modelu kreira novog usera u DB, podaci stizu u req.body
+  vratim u RES taj objekt sa statusom 201 (successfully created)
+  cijelu exports metodu wrapam u catchAsync(), tako da ne moram try/catch pisati, vec imam sve u toj funkciji
+
+- userRoutes.js
+  kreiram rute 
+
+- userSchema,js
+  validate confirmPassword
+  dodaj pre hook za enkripciju passwords

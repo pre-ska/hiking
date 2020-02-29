@@ -1,7 +1,7 @@
-//10-1
+//10-2
 const mongoose = require('mongoose');
 const validator = require('validator');
-import isEmail from 'validator/lib/isEmail';
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'User name is required'],
     trim: true,
     maxlength: [40, 'A user name must have less than 30 characters'],
-    minlength: [10, 'A user name must have minimum 3 characters']
+    minlength: [3, 'A user name must have minimum 3 characters']
   },
   email: {
     type: String,
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     trim: true,
-    validate: [isEmail, 'Pleas provide valid email']
+    validate: [validator.isEmail, 'Pleas provide valid email']
   },
   photo: String,
   password: {
@@ -29,8 +29,28 @@ const userSchema = new mongoose.Schema({
   passwordConfirm: {
     type: String,
     required: [true, 'please confirm your password'],
-    trim: true
+    trim: true,
+    validate: {
+      //10-4 usporedi 2 polja, radi samo na CREATE i SAVE!! (a ne npr findOneAndUpdate)
+      validator: function(el) {
+        return el === this.password;
+      },
+      message: 'Passwords are not the same'
+    }
   }
+});
+
+//10-4 hashing password bcrypt
+userSchema.pre('save', async function(next) {
+  // ako password nije modificiran, zovi next()... "this" je dokument
+  if (!this.isModified('password')) return next();
+
+  // hasiraj password sa "cost" 12
+  this.password = await bcrypt.hash(this.password, 12); // 10 je default
+
+  // obrisi passwordConfirm
+  this.passwordConfirm = undefined; // nakon sto je password potvrdjen, vise ga ne trebam usporedjivati pa je i ovo polje u DB nepotrbno
+  next();
 });
 
 /******************************************** */
