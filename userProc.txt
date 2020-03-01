@@ -10,6 +10,6 @@
 - userRoutes.js
   kreiram rute 
 
-- userSchema,js
+- userModel.js
   validate confirmPassword
-  dodaj pre hook za enkripciju passwords
+  dodaj pre-hook za enkripciju passwords (prije "save")
