@@ -4,28 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        margin: 50px;
+        padding-top: 50px;
+        font-size: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+      li {
+        margin-left: 20px;
+      }
+    </style>
   </head>
   <body>
     <h3>userModel.js</h3>
-    <li>kreiram userSchema i User model</li>
+    <li>kreiram <b>userSchema</b> i <b>User model</b></li>
+    <hr />
 
     <h3>authController.js</h3>
-    <li>kreiram metode User modela</li>
+    <li>kreiram metode <b> User modela</b></li>
     <li>
-      exports.signup...async funkcija koja po modelu kreira novog usera u DB,
-      podaci stizu u req.body
+      <b>exports.signup</b>...async funkcija koja po modelu kreira novog usera u
+      DB, podaci stizu u <i>req.body</i>
     </li>
-    <li>vratim u RES taj objekt sa statusom 201 (successfully created)</li>
+    <li>vratim u RESPONSE taj objekt sa statusom 201 (successfully created)</li>
     <li>
-      cijelu exports metodu wrapam u catchAsync(), tako da ne moram try/catch
-      pisati, vec imam sve u toj funkciji
+      cijelu exports metodu wrapam u <b>catchAsync()</b>, tako da ne moram
+      stalno try/catch pisati, vec imam sve u toj funkciji - u njoj hvatam sve
+      moguće errore
     </li>
+    <hr />
 
     <h3>userRoutes.js</h3>
     <li>kreiram rute</li>
+    <hr />
 
     <h3>userModel.js</h3>
-
     <li>validate confirmPassword</li>
     <li>dodaj pre-hook za enkripciju passworda (prije "save")</li>
     <li>jwt</li>
@@ -48,23 +65,71 @@
       ako sve prodje, izradim token sa signToken funkcijom i vratim taj token na
       frontend
     </li>
+    <hr />
 
-    <h2>PROTECTED ROUTES</h2>
-    <p>
-      zelim npr da mi getAllTours bude zasticena ruta, tj. da samo registrirani
-      korisnici mogu to vidit
-    </p>
+    <h1>PROTECTED ROUTES</h1>
+    <i>
+      zelim npr da mi <b>getAllTours</b> bude zasticena ruta, tj. da samo
+      registrirani korisnici mogu to vidit
+    </i>
 
     <h3>authController.js</h3>
-    <li>kreiram middleware funkciju za zasticenu rutu .protect()</li>
+    <li>
+      kreiram middleware funkciju <b>.protect()</b> za bilo koju zasticenu rutu
+      koja treba ispitati dali je korisnik logiran
+    </li>
+    <hr />
 
     <h3>tourRoutes.js 10-8</h3>
-    <li>authController.protect() stavim prije getAllTours()</li>
     <li>
-      ako user nije authenticated, next ce baciti error, ako je -> proci ce
-      dalje u pipeline
+      <b>authController.protect</b> stavim prije
+      <b>tourController.getAllTours</b>
     </li>
-    <li>za token ispitam header u requestu dali ga sadrzi</li>
-    <li>napravi error handler za JWT invalid token i za token expired</li>
+    <hr />
+
+    <h3>authController.js</h3>
+    <li>
+      ako user nije authenticated, <b>next()</b> ce baciti error, ako je ->
+      proci ce dalje u pipeline
+    </li>
+    <li>
+      prvo ispitam dali headers <b>req.headers</b> sadrzi
+      <i>Authorization</i> token
+    </li>
+    <li>
+      ako sadrzi, koristim <b>promisify</b> metodu iz Node-a nad drugom metodom
+      iz JWT library-a...jer mi treba <i>promise</i>
+    </li>
+    <li>
+      ta druga metoda je <b>jwt.verify()</b>, njoj dam token i secret koja je
+      <i>enviroment varijabla</i>... JWT usporedi dali se tokeni podudaraju
+    </li>
+    <li>
+      ukoliko nesto ne valja, <b>AppError</b> ce presresti error i izbaciti
+      gresku, ili INVALID TOKEN ili TOKEN EXPIRED
+    </li>
+    <li>
+      napravi error handler za JWT invalid token i za token expired - u
+      <b>errorControler.js</b>
+    </li>
+    <li>provjeri dali korsinik za kojeg je izdan token jos postoji</li>
+    <li>
+      provjeri dali je korsinik promjenio password u medjuvremenu - otkad je JWT
+      izdan - ZA OVU PROVJERU RADIM NOVU METODU NA DOKUMENTU...DOKUMENT JE
+      INSTANCA MODELA, A KAD DODAM METODU NA MODEL, SVE INSTANCE (DOKUMENTI) JE
+      SADRZE ------ ZATO OVU METODU RADIM KAO STATICKU U MODELU!!! ...a ne u
+      errorControleru
+    </li>
+    <li>
+      nadalje, zbog ove metode, potrebno je da znam kada je korisnik promjenio
+      password, pa cu u <b>userSchema</b> napraviti polje koje ce svaku promjenu
+      passworda zavesti kao timestamp.... kasnije samo usporedim kada je token
+      izdan i dali je nakon toga promjenjen password
+    </li>
+    <li>
+      ako sve prodje u redu, pustam dalje sa <b>next()</b>...mogu dodati i
+      podatke o useru na reqest object, ako zatreba kasnije...to sam i onako
+      dohvacao iz DB radi kontroliranja
+    </li>
   </body>
 </html>

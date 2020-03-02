@@ -21,7 +21,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
+    passwordConfirm: req.body.passwordConfirm,
+    passwordChangedAt: req.body.passwordChangedAt // ovo je samo za test
   });
 
   const token = signToken(newUser._id);
@@ -68,7 +69,7 @@ exports.login = catchAsync(async (req, res, next) => {
   });
 });
 
-//10-8
+//10-8 10-9
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) provjeri dali ima token u requestu
   let token;
@@ -86,11 +87,34 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // 2) verifikacija tokena 10-9
+  // u "decoded" dobijem id usera/dokumenta, kada je token izdan i kada mu je expired
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-  // 3) provjeri dali korisnik jos uvijek postoji
+  // -ako je verifikacija prosla -> nastavljam, ako nije, error ce biti throw i ovo se nece izvrsavati dalje
+
+  // 3) provjeri dali korisnik jos uvijek postoji - zbog sigurnosti
+  const currentUser = await User.findById(decoded.id);
+
+  if (!currentUser) {
+    return next(
+      new AppError(
+        'The user belonging to this token does not exists anymore',
+        401
+      )
+    );
+  }
 
   // 4) provjeri dali je korisnik promjenio password NAKON sto je JWT  token izdan
+  // iat = "issued at"... to je u decoded objektu
+  // changePasswordAfter je statc instance method u modelu...userModel.js
+  if (currentUser.changePasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('User recently changed Password! Please log in again', 401)
+    );
+  }
 
+  //ako je dovde dosao...svee je proslo ok i PUSTAM DALJE DO ZASTICENE RUTE
+  // dodajem usera na req jer ce mi kasnije koristiti
+  req.use = currentUser;
   next();
 });

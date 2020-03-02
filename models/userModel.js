@@ -38,7 +38,8 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Passwords are not the same'
     }
-  }
+  },
+  passwordChangedAt: Date //10-9 zbog kontrole passworda dali je promjenjen
 });
 
 //10-4 hashing password bcrypt
@@ -54,13 +55,31 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-//10-7 instance method - ovo ce biti dostupno na svim dokumentima neke kolekcije...znaci mogu ovu metodu pozvati na bilo kojem USer modelu u npr authControleru
+//10-7 static instance method - ovo ce biti dostupno na svim dokumentima neke kolekcije...znaci mogu ovu metodu pozvati na bilo kojem USer modelu u npr authControleru
 //hasira password prilikom logina...onda taj hash usporedjujem sa hashom u DB...
 userSchema.methods.correctPassword = async function(
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+//10-9 static instance method - ovo ce biti dostupno na svim dokumentima neke kolekcije...znaci mogu ovu metodu pozvati na bilo kojem Ueer dokumentu u npr authControleru
+//ova metoda provjerava dali je promjenjen password od korisnika u vremenu od kada je izdan token -JWTTimestamp
+userSchema.methods.changePasswordAfter = async function(JWTTimestamp) {
+  //this je trenutni dokument
+  // ako je korisnik promjenio password, nesto ce biti zapisano - timestamp...ako nije, nece postojati
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp; //false je OK...nije promjenjen u medjuvremenu
+  }
+
+  //false means NOT changed
+  return false;
 };
 
 /******************************************** */
