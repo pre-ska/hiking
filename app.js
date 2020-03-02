@@ -24,6 +24,7 @@ app.use(express.static(`${__dirname}/public`));
 // });
 
 app.use((req, res, next) => {
+  //dodaje timestamp za svaki request
   req.requestTime = new Date().toISOString();
   next();
 });

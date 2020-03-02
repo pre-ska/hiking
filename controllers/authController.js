@@ -65,3 +65,29 @@ exports.login = catchAsync(async (req, res, next) => {
     token
   });
 });
+
+//10-8
+exports.protect = catchAsync(async (req, res, next) => {
+  // 1) provjeri dali ima token u requestu
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if (!token) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access', 401)
+    ); // 401 - unauthorized
+  }
+
+  // 2) verifikacija tokena
+
+  // 3) provjeri dali korisnik jos uvijek postoji
+
+  // 4) provjeri dali je korisnik promjenio password NAKON sto je JWT  token izdan
+
+  next();
+});

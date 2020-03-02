@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>userModel.js</h3>
+    <li>kreiram userSchema i User model</li>
+
+    <h3>authController.js</h3>
+    <li>kreiram metode User modela</li>
+    <li>
+      exports.signup...async funkcija koja po modelu kreira novog usera u DB,
+      podaci stizu u req.body
+    </li>
+    <li>vratim u RES taj objekt sa statusom 201 (successfully created)</li>
+    <li>
+      cijelu exports metodu wrapam u catchAsync(), tako da ne moram try/catch
+      pisati, vec imam sve u toj funkciji
+    </li>
+
+    <h3>userRoutes.js</h3>
+    <li>kreiram rute</li>
+
+    <h3>userModel.js</h3>
+
+    <li>validate confirmPassword</li>
+    <li>dodaj pre-hook za enkripciju passworda (prije "save")</li>
+    <li>jwt</li>
+    <li>login metoda</li>
+    <li>
+      userModel - schema - password - select: false ... da mi ne vraca password
+      polje na klijentsku stranu
+    </li>
+    <li>osim ako ga explicitno ne zatrazim .select("+password")</li>
+    <li>
+      ako email i password polje u REQESTU postoji, zatrazim iz DB taj dokument
+      usera po emailu (+password)
+    </li>
+    <li>
+      ako taj dokument postoji, ispitam dali je hash passworda iz DB jednak
+      passwordu iz REQUESTA (bcrypt.compare)
+    </li>
+    <li>ako nesto od ovoga ne prodje, bacim error u next()</li>
+    <li>
+      ako sve prodje, izradim token sa signToken funkcijom i vratim taj token na
+      frontend
+    </li>
+
+    <h2>PROTECTED ROUTES</h2>
+    <p>
+      zelim npr da mi getAllTours bude zasticena ruta, tj. da samo registrirani
+      korisnici mogu to vidit
+    </p>
+
+    <h3>authController.js</h3>
+    <li>kreiram middleware funkciju za zasticenu rutu .protect()</li>
+
+    <h3>tourRoutes.js 10-8</h3>
+    <li>authController.protect() stavim prije getAllTours()</li>
+    <li>
+      ako user nije authenticated, next ce baciti error, ako je -> proci ce
+      dalje u pipeline
+    </li>
+    <li>za token ispitam header u requestu dali ga sadrzi</li>
+  </body>
+</html>
