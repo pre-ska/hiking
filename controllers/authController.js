@@ -1,3 +1,5 @@
+const { promisify } = require('util'); //10-9
+
 //10-3
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
@@ -83,7 +85,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     ); // 401 - unauthorized
   }
 
-  // 2) verifikacija tokena
+  // 2) verifikacija tokena 10-9
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) provjeri dali korisnik jos uvijek postoji
 

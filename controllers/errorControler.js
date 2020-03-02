@@ -21,8 +21,19 @@ const handleValidationErrorDB = err => {
   return new AppError(message, 400);
 };
 
+//10-9 //////////////////////////////////
+const handleJWTError = () =>
+  new AppError('Invalid token. Pleas log in again', 401);
+/////////////////////////////////////////////////////////
+
+//10-9 //////////////////////////////////
+const handleJWTExpiredError = () =>
+  new AppError('Token expired. Pleas log in again', 401);
+/////////////////////////////////////////////////////////
+
+// dijelim errore na development i production
+// 9-9
 const sendErrorDev = (err, res) => {
-  // 9-9
   res.status(err.statusCode).json({
     status: err.status,
     error: err,
@@ -30,9 +41,9 @@ const sendErrorDev = (err, res) => {
     stack: err.stack
   });
 };
-// dijelim errore na development i production
+
+// 9-9
 const sendErrorProd = (err, res) => {
-  // 9-9
   if (err.isOperational) {
     //trusted error, ide do klienta
     res.status(err.statusCode).json({
@@ -40,7 +51,7 @@ const sendErrorProd = (err, res) => {
       message: err.message
     });
   } else {
-    //nepoznat error.... nesaljem ga klijentu vec samo na konzolu
+    //nepoznat error.... ne saljem ga klijentu vec samo na konzolu
     console.error('ERROR ----', err);
     res.status(500).json({
       status: 'error',
@@ -71,6 +82,13 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'ValidationError')
       error = handleValidationErrorDB(error);
 
+    //10-9 JsonWebTokenError - invalid token
+    if (error.name === 'JsonWebTokenError') error = handleJWTError();
+
+    //10-9 TokenExpiredError - expired token
+    if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+
+    // funkcija koja izbaci finalni error, prijasnje su samo dodavale detalje
     sendErrorProd(error, res);
   }
 };
