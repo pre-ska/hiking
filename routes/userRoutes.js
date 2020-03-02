@@ -7,6 +7,9 @@ const router = express.Router();
 //10-3
 router.post('/signup', authController.signup);
 
+//10-7
+router.post('/login', authController.login);
+
 router
   .route('/')
   .get(userController.getAllUsers)

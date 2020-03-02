@@ -13,3 +13,11 @@
 - userModel.js
   validate confirmPassword
   dodaj pre-hook za enkripciju passwords (prije "save")
+  jwt
+  login metoda
+  userModel - schema - password - select: false ... da mi ne vraca password polje na klijentsku stranu
+  osim ako ga explicitno ne zatrazim .select("+password")
+  ako email i password polje u REQESTU postoji, zatrazim iz DB taj dokument usera po emailu (+password)
+  ako taj dokument postoji, ispitam dali je hash passworda iz DB jednak passwordu iz REQUESTA (bcrypt.compare)
+  ako nesto od ovoga ne prodje, bacim error u next()
+  ako sve prodje, izradim token sa signToken funkcijom i vratim taj token na frontend

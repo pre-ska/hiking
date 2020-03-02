@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
     trim: true,
-    minlength: 8
+    minlength: 8,
+    select: false //ne prikazuje se nigdje...npr u odgovoru RESPONSE prema klijentu
   },
   passwordConfirm: {
     type: String,
@@ -52,6 +53,15 @@ userSchema.pre('save', async function(next) {
   this.passwordConfirm = undefined; // nakon sto je password potvrdjen, vise ga ne trebam usporedjivati pa je i ovo polje u DB nepotrbno
   next();
 });
+
+//10-7 instance method - ovo ce biti dostupno na svim dokumentima neke kolekcije...znaci mogu ovu metodu pozvati na bilo kojem USer modelu u npr authControleru
+//hasira password prilikom logina...onda taj hash usporedjujem sa hashom u DB...
+userSchema.methods.correctPassword = async function(
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 /******************************************** */
 const User = mongoose.model('User', userSchema);
