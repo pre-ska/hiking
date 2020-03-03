@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, 'Pleas provide valid email']
   },
   photo: String,
+  role: {
+    // 10-11 implemntiram user roles za admine
+    type: String,
+    enum: ['user', 'guide', 'lead-guide', 'admin'], // vrste korsinika po ovlastima
+    default: 'user'
+  },
   password: {
     type: String,
     required: [true, 'Password is required'],

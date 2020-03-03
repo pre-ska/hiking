@@ -15,15 +15,15 @@ const signToken = id => {
 
 //10-6
 exports.signup = catchAsync(async (req, res, next) => {
-  //const newUser = await User.create(req.body);// ovo nije sigurno, jer se svako moze registrirati kao admin
-  const newUser = await User.create({
-    // fragmentiram polja tako da je svako polje striktno defirnirano
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm
-    // passwordChangedAt: req.body.passwordChangedAt // ovo je samo za test
-  });
+  const newUser = await User.create(req.body); // ovo nije sigurno, jer se svako moze registrirati kao admin
+  // const newUser = await User.create({
+  //   // fragmentiram polja tako da je svako polje striktno defirnirano
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   password: req.body.password,
+  //   passwordConfirm: req.body.passwordConfirm,
+  //   // passwordChangedAt: req.body.passwordChangedAt // ovo je samo za test
+  // });
 
   const token = signToken(newUser._id);
 
@@ -113,8 +113,28 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  //ako je dovde dosao...svee je proslo ok i PUSTAM DALJE DO ZASTICENE RUTE
-  // dodajem usera na req jer ce mi kasnije koristiti
-  req.use = currentUser;
+  //ako je dovde dosao...sve je proslo ok GRANT ACCESS TO PROTECTED ROUTE
+  // dodajem usera na req jer ce mi kasnije koristiti u .restrictTo() middlewareu
+  req.user = currentUser;
   next();
 });
+
+//10-11...moram wrapati middleware u novu funkciju da primi argumente
+// korsitim rest parametars syntax da primi sve argumente koliko ih god ima npr. ['admin','lead-guide']
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    //defaultni role je "user" i nije sadrzan u argumentima "roles"...
+    //kada sam dozvolio korisniku pristup u .protect() metodi, u req.user sam zapisao cijeli user objekt zajedno sa njegovom role
+    //taj .protect() middleware uvijek ide prije .restrictTo()...zato imam u njemu role property
+    //------------------------------------------------
+    //ako role iz korsinickog objekta nije sadrzana u argumentima...odbacim zahtjev
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      ); // 403- forbidden
+    }
+
+    //ako prodje dovde - OK - dozvolim brisanje
+    next();
+  };
+};

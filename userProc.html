@@ -131,5 +131,49 @@
       podatke o useru na reqest object, ako zatreba kasnije...to sam i onako
       dohvacao iz DB radi kontroliranja
     </li>
+
+    <h1>AUTHORIZATION 10-11</h1>
+    <i>samo neki useri imaju vece ovlasti, a ne svi logirani useri</i><br />
+    <i>npr. ne mogu svi kreirati, uredjicvati i brisati ture</i><br />
+    <i
+      >to radim sa middlewareom sa kojim restriktiram odredjene rute (delete)
+      samo na one korisnike koji su povlasteni</i
+    ><br />
+
+    <h3>------za delete funkciju--------</h3>
+    <h3>tourRoutes.js</h3>
+    <li>
+      DELETE ruta ---- dodam <b>authController.protect</b> prije
+      <b>tourController.deleteTour</b> jer uvijek prvo moram provjeriti dali je
+      korsinik logiran
+    </li>
+    <li>
+      to je prvi middleware u delete ruti... nako njega ide
+      <b>authController.restrictTo</b>
+    </li>
+    <li>
+      USER ROLES -<b>authController.restrictTo</b> prima vrstu korsinika
+      <i>admin</i>, <i>lead-guide</i>... kao argument...samo navedene role
+      korsinika mogu OBRISTATI turu..tj proci restrictTo middleware
+    </li>
+    <h3>userModel.js</h3>
+    <li>
+      implementiraj <b>role</b> u user model - <i>userSchema</i> ... 'user',
+      'guide', 'lead-guide', 'admin'
+    </li>
+    <li>
+      defaultna je <b>user</b> ...nemoram za svakog pisati kada ga registriram
+    </li>
+    <h3>authController.js</h3>
+    <li>napravi metodu <b>restrictTo</b></li>
+    <li>
+      posto metoda <b>restrictTo</b> prima argument a to nije moguce sa
+      middlewareom, moram taj middleware wrapati u novu funkciju koja ce primiti
+      argumente i vratiti taj middleware
+    </li>
+    <li>
+      prvi middleware <b>.protect</b> je dopunio reqest object sa USER objektom
+      i u njemu imam sadrzano koja je role za tog korisnika..pa ga mogu ispitati
+    </li>
   </body>
 </html>
