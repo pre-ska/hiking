@@ -66,7 +66,7 @@ userSchema.methods.correctPassword = async function(
 
 //10-9 static instance method - ovo ce biti dostupno na svim dokumentima neke kolekcije...znaci mogu ovu metodu pozvati na bilo kojem Ueer dokumentu u npr authControleru
 //ova metoda provjerava dali je promjenjen password od korisnika u vremenu od kada je izdan token -JWTTimestamp
-userSchema.methods.changePasswordAfter = async function(JWTTimestamp) {
+userSchema.methods.changePasswordAfter = function(JWTTimestamp) {
   //this je trenutni dokument
   // ako je korisnik promjenio password, nesto ce biti zapisano - timestamp...ako nije, nece postojati
   if (this.passwordChangedAt) {
