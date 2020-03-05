@@ -175,5 +175,87 @@
       prvi middleware <b>.protect</b> je dopunio reqest object sa USER objektom
       i u njemu imam sadrzano koja je role za tog korisnika..pa ga mogu ispitati
     </li>
+
+    <h1>PASSWORD RESET 10-12</h1>
+    <i>postupak 2 koraka:</i><br />
+    <b>1. forgotPassword</b><br />
+    <i>korsinik posalje POST request sa email adresom na password reset rutu </i
+    ><br />
+    <i
+      >tada ce se kreirati random token (ne JSW token) i biti ce poslan na tu
+      email adresu</i
+    ><br />
+    <b>2. resetPassword</b><br />
+    <i
+      >nakon toga korsinik posalje natrag taj token zajedno sa novim passwordom
+      da bi napravio update</i
+    >
+
+    <h3>authController.js</h3>
+    <li>kreiram forgotPassword i resetPassword metode</li>
+
+    <h3>userRoutes.js</h3>
+    <li>
+      kreiram RUTE <b>forgotPassword</b> i <b>resetPassword</b> koje te metode
+      hvataju i dodam im njihove metode
+    </li>
+
+    <h3>authController.js</h3>
+    <li>
+      u <b>forgetPassword</b> prvo dohvatim usera po emailu koji je dostavio za
+      reset
+    </li>
+    <li>ako taj user ne postoji, odbacim sa next-new AppError</li>
+    <li>
+      za izradu token cu korsititi instance metodu na modelu, jer je tako
+      bolje... malo je veci kod i vezan je za svakog korisnika
+    </li>
+
+    <h3>userModel.js</h3>
+    <li>napravim <b>createPasswordResetToken</b> staticku instance metodu</li>
+    <li>
+      za kreiranje i kriptiranje tokena koristim <b>crypto</b> -
+      <i>Node build-in module</i>
+    </li>
+    <li>
+      NIKAD NE SPREMAM U DB CISTI TOKEN...vec ga encriptiram dodatno sa crypto
+      metodom
+    </li>
+    <li>napravim <b>random token</b> sa crypto</li>
+    <li>zatim taj token kriptiram takodjer sa crypto</li>
+    <li>
+      da bi ga imao u DB u user objektu, moram u userModelu- schema- napraviti
+      field za token <b>passwordResetToken</b>... jer moram usporediti taj token
+      sa onim koji korisnik dostavi sa novim passwordom
+    </li>
+    <li>
+      osim toga moram imati i <b>passwordResetExpires</b>... jer taj token ne
+      moze trajati vjecno...zbog sigurnosti...npr 10 minuta
+    </li>
+    <li>
+      NAPOMENA: korisniku na email ne saljem kriptiran token vec cisti
+      token...bilo bi glupo poslati kriptiran token isti kao sto je spremljen u
+      DB
+    </li>
+    <h3>SLANJE EMAILA za password reset 10-13</h3>
+    <h3>email.js - u utils folderu</h3>
+    <li>instaliram prvo modul <b>nodemailer</b></li>
+    <li>
+      <b>nodemailer</b> radi na principu da koristi neki od mail servisa npr:
+      Gmail
+    </li>
+    <li>
+      zato mu moram dati sve potrebne auth podatke da se moze logirati na moj
+      Gmail account
+    </li>
+    <li>
+      u
+      <i>transporteru</i> definiram service i auth objekt (username i password
+      za gmail)
+    </li>
+    <li>
+      vrijednosti za username i password ne dajem direktno, vec is definiram kao
+      env. varijable i onda ih tako korisitim
+    </li>
   </body>
 </html>

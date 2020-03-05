@@ -138,3 +138,26 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+//10-12 kreiranje tokena za reset passworda
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  // 1) dohvatim usera na osnovu emaila koji je dao u formi za reset password
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('There is no user with that email address', 404));
+  }
+
+  // 2) generiram random token - za to cu korisititi staticku instance mtodu...jer su tokeni strikno vezani ka user podatke
+  const resetToken = user.createPasswordResetToken();
+  // nakon sto sam promjeni podatke u instance metodi, moram taj dokument snimiti...jer nigdje nije snimljen u DB
+  // ALI...posto saljem samo email na ovu rutu... a spremanje podataka u DB zahtjeva validaciju, OVDJE MORAM IZRICITO NAGLASITI DA PRILIKOM SEJVANJA NE RADIM VALIDACIJU
+  // btw ovo pripada mongoose libu
+  await user.save({ validateBeforeSave: false });
+  // res.status(200).json({
+  //   status: 'success'
+  // });
+  // 3)posaljem token na tu email adresu
+});
+
+//10-12 resetiranje passworda - kreiranje tokena
+exports.resetPassword = (req, res, next) => {};

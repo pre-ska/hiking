@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
+//10-12
+const crypto = require('crypto');
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -45,7 +48,9 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same'
     }
   },
-  passwordChangedAt: Date //10-9 zbog kontrole passworda dali je promjenjen
+  passwordChangedAt: Date, //10-9 zbog kontrole passworda dali je promjenjen
+  passwordResetToken: String,
+  passwordResetExpires: Date
 });
 
 //10-4 hashing password bcrypt
@@ -86,6 +91,27 @@ userSchema.methods.changePasswordAfter = function(JWTTimestamp) {
 
   //false means NOT changed
   return false;
+};
+
+//10-12 static instance method - ovo ce biti dostupno na svim dokumentima neke kolekcije...znaci mogu ovu metodu pozvati na bilo kojem Ueer dokumentu u npr authControleru
+//ova metoda ce kreirati random token ako korisnik zeli da promjeni password
+userSchema.methods.createPasswordResetToken = function() {
+  // build in node module - crypto kreira token
+  const resetToken = crypto.randomBytes(32).toString('hex');
+
+  // - NIKAD NE SPREMAM U DB CISTI TOKEN...vec ga hashiram sa crypto metodom createHash
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  console.log('obicni token - ', resetToken);
+  console.log('enkriptiran token - ', this.passwordResetToken);
+  console.log('token expires - ', this.passwordResetExpires);
+
+  return resetToken;
 };
 
 /******************************************** */
