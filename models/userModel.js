@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: Date
 });
 
-//10-4 hashing password bcrypt
+//10-4 hashing password bcrypt - PRE-HOOK
 userSchema.pre('save', async function(next) {
   // ako password nije modificiran, zovi next()... "this" je dokument
   if (!this.isModified('password')) return next();
@@ -63,6 +63,18 @@ userSchema.pre('save', async function(next) {
 
   // obrisi passwordConfirm
   this.passwordConfirm = undefined; // nakon sto je password potvrdjen, vise ga ne trebam usporedjivati pa je i ovo polje u DB nepotrbno
+  next();
+});
+
+//10-14 pre-hook za provjeru promjene passworda prilikom snimanja
+// ako priolikom snimanja dokumenta password NIJE promjenjen ili AKO JE OVO NOVI dokument (koji isto zapise password)
+// return next() --- jednostavno iskoci iz fumnkcije
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  // a ako prodje, onda zapisi novi property passwordChangedAt u user dokument
+  this.passwordChangedAt = Date.now();
+
   next();
 });
 
@@ -106,10 +118,6 @@ userSchema.methods.createPasswordResetToken = function() {
     .digest('hex');
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-
-  console.log('obicni token - ', resetToken);
-  console.log('enkriptiran token - ', this.passwordResetToken);
-  console.log('token expires - ', this.passwordResetExpires);
 
   return resetToken;
 };

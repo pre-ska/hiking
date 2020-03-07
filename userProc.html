@@ -237,6 +237,7 @@
       token...bilo bi glupo poslati kriptiran token isti kao sto je spremljen u
       DB
     </li>
+
     <h3>SLANJE EMAILA za password reset 10-13</h3>
     <h3>email.js - u utils folderu</h3>
     <li>instaliram prvo modul <b>nodemailer</b></li>
@@ -256,6 +257,94 @@
     <li>
       vrijednosti za username i password ne dajem direktno, vec is definiram kao
       env. varijable i onda ih tako korisitim
+    </li>
+    <h3>config.env</h3>
+    <li>definiram email_password i email_username</li>
+    <h3>email.js</h3>
+    <li>
+      da bi koristio gmail, moram u gmail postavkama ukljuciti
+      <b>less secure app</b> opciju
+    </li>
+    <li>
+      posto gmail dopusta samo 500 emailova dnevno...koristit cu neki drugi
+      servis...
+    </li>
+    <li>
+      za testiranje aplikacije, koristim <b>MAILTRAP</b> ...on uhvati mailove i
+      spremi ih u dev folderu za testiranje
+    </li>
+    <li>
+      spremin username i password od <b>mailtrap</b> u config.env...moram i host
+      i port, jer mailtrap nije predefiniran u nodemaileru
+    </li>
+    <h3>authController.js</h3>
+    <li>
+      nakon sto podesim sve opcije u <b>email.js</b> uvezem taj file u
+      <b>authController</b>
+    </li>
+    <li>
+      u <b>userRoutes.js</b> stavim rutu da mi je PATCH jer ce ovaj proces
+      promjeniti korisnicku sifru...pa je zbog toga patch najbolja opcija...i
+      dodaj parametar na kraj PATHA.. <b>:token</b>
+    </li>
+    <li>
+      testiram sa postmanom <b>forgotPassword</b> rutu... <b>mailtrap</b> ce je
+      uhvatiti i prikazati moj poslani mail sa tokenom
+    </li>
+    <h3>resetiranje samog passworda 10-14</h3>
+    <li>
+      u <b>resetPassword</b> metodi dobijem token (u parametrima =>
+      req.params.token) koji NIJE hashiran
+    </li>
+    <li>uvezem crypto u authToken.js</li>
+    <li>
+      hasiram dobiveni token sa crypto po istim pravilima kao sto sam i u
+      <b>userModel.js</b> u metodi <b>createPasswordResetToken</b>
+    </li>
+    <li>
+      dohvatim korisnicki dokument po hashiranom tokenu i testu dali je istekao
+    </li>
+    <li>ako nema tog usera ili je token expired, throw error</li>
+    <li>
+      ako je sve OK, zapisi novi password i confirPassword na user dokument,
+      obrisi token i expired timestamp
+    </li>
+    <li>
+      snimi dokument, pre-hook za save() ce uhavtit to i provjeriti password i
+      confirmPassword, hashirat password i obrisat confirmPassword
+    </li>
+    <li>
+      sve evezano za passworde, moram koristiti <b>save()</b> a ne
+      <b>findOneAndUpdate()</b> jer samo na <b>save()</b> rade middelware
+      validatori
+    </li>
+    <li>
+      za svako spremanje password moram napraviti i
+      <b>passwordChangedAt</b> zbog sigurnost
+    </li>
+
+    <h3>userModel.js</h3>
+    <li>
+      za ovu funkcionalnost napravit cu PRE-HOOK koja ce provjeriti dali je
+      password promjenjen i AKO JE!!! -- onda ce napraviti i property
+      <b>cahngedPasswordAt</b>
+    </li>
+    <li>
+      jos cu provjeriti da nije novi dokument, jer i prilikom novog dokumenta
+      (registracije) password se mjenja
+    </li>
+    <li>-----------PROBLEM!!!!!!!!!!!!: -----------------</li>
+    <li>
+      spremanje dokumenta u DB nekad zna biti sporije od izdavanja tokena (race
+      condition)¸...izdavanje tokena ide iza ovoga u kodu
+    </li>
+    <li>
+      jednostavno prilikom kreiranja <b>passwordChangedAt</b> u pre-hooku cu
+      oduzeti jednu sekundu na timestampu (-1000)
+    </li>
+    <li>
+      nakon sto sam promjenio password, i sve ostalo... izdam novi token i
+      posaljem ga na fromtend
     </li>
   </body>
 </html>

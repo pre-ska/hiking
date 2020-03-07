@@ -1,10 +1,13 @@
 const { promisify } = require('util'); //10-9
 
+const crypto = require('crypto'); //10-14
+
 //10-3
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const jwt = require('jsonwebtoken'); //10-6
 const AppError = require('../utils/appError'); //10-7
+const sendEmail = require('../utils/email'); //10-13
 
 //10-7
 const signToken = id => {
@@ -156,8 +159,86 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // res.status(200).json({
   //   status: 'success'
   // });
-  // 3)posaljem token na tu email adresu
+
+  // 3)10-13 posaljem token na tu email adresu
+  const resetURL = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/resetPassword/${resetToken}`;
+
+  const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}\nIf you didn't forget your password, please ignor this email`;
+
+  // 10-13 ovdje saljem email sa tokenom na adresu koja je u korisnickom dokumentu navedena prilikom registracije
+  // ovdje se moze dogoditi greska...da mail nije poslan...i nije dovoljno samo poslati response da nesto ne valja vec moram ponistiti izdanei token
+  // zato koristim try/catch
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Your password reset token (valid for 10 min)',
+      message
+    });
+
+    // 10-13 ovo  saljem na frontend kao obajvest da je poslan email na korisnicku email adresu
+    // ovdje ne saljem token !!!!!!!!...token mora ici na email
+    res.status(200).json({
+      status: 'success',
+      message: 'token send to email'
+    });
+  } catch (error) {
+    //u slucaju greske ovdje moram ponistit token koji sam izdao
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    //spremin u DB ponistene tokene
+    await user.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError('there was an error sending the email.Try again later', 500)
+    );
+  }
 });
 
-//10-12 resetiranje passworda - kreiranje tokena
-exports.resetPassword = (req, res, next) => {};
+//10-14 resetiranje passworda - kreiranje tokena
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  // 1) dohvati korisnika s obzirom na token
+  // prvo hashiram token koji stigne u requestu kao param (:token) i onda trazim korisnika u DB po tom hashiranom tokenu
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  // osim po tokenu, odma usporedim i dali je token istekao tj. dali je spremljeni Expires veci od trenutnog vremena... jos uvijek vazi
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() }
+  });
+
+  // 2) ako postoji taj korisnik i token NIJE istekao
+  if (!user) {
+    return next(new AppError('Token is invalid or expired.', 400)); //400 bad request
+  }
+
+  //ako prodje dovde,
+  //onda na user dokument zapisem novi password i confirm password
+  // ti passwordi nisu hashirani
+  // resetiram token i njegov expire time
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+
+  //spremim promjenjeni dokument
+  // OVDJE CE VALIDATOR PROVJERITI DALI JE PASSWORD = CONFIRMPASSWORD
+  // ZATIM CE OBRISATI CONFIRMPASSWORD
+  // TO RADI PRE-HOOK - prije save()
+  await user.save();
+
+  // 3) obnovi passwordChangedAt property za tog korisnika
+  user.passwordChangedAt = Date.now() - 1000;
+
+  // 4) logiraj korisnika - posljai JWT na prontend klijent
+  const token = signToken(user._id);
+
+  res.status(200).json({
+    status: 'success',
+    token
+  });
+});
