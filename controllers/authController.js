@@ -1,5 +1,5 @@
 const { promisify } = require('util'); //10-9
-
+const bcrypt = require('bcryptjs'); //10-15 ovo prima SAMO STRINGOVE
 const crypto = require('crypto'); //10-14
 
 //10-3
@@ -16,6 +16,19 @@ const signToken = id => {
   });
 };
 
+//10-15 kod koji se cesto ponavlja pa sam ga izvukao u zasebnu funkciju
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    data: {
+      user
+    }
+  });
+};
+
 //10-6
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body); // ovo nije sigurno, jer se svako moze registrirati kao admin
@@ -28,15 +41,17 @@ exports.signup = catchAsync(async (req, res, next) => {
   //   // passwordChangedAt: req.body.passwordChangedAt // ovo je samo za test
   // });
 
-  const token = signToken(newUser._id);
+  //10-15 zamjena koda koji se ponavlja sa funkcijom
+  createSendToken(newUser, 201, res);
+  // const token = signToken(newUser._id);
 
-  res.status(201).json({
-    status: 'success',
-    token,
-    data: {
-      user: newUser
-    }
-  });
+  // res.status(201).json({
+  //   status: 'success',
+  //   token,
+  //   data: {
+  //     user: newUser
+  //   }
+  // });
 });
 
 //10-7
@@ -64,15 +79,18 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   //ako je sve dovde proslo, posalji token klijentu/useru
-  const token = signToken(user._id);
 
-  res.status(200).json({
-    status: 'success',
-    token
-  });
+  //10-15 zamjena koda koji se ponavlja sa funkcijom
+  createSendToken(user, 200, res);
+  // const token = signToken(user._id);
+
+  // res.status(200).json({
+  //   status: 'success',
+  //   token
+  // });
 });
 
-//10-8 10-9
+//10-8 10-9 za svaku zasticenu rutu
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) provjeri dali ima token u requestu
   let token;
@@ -234,11 +252,51 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 3) obnovi passwordChangedAt property za tog korisnika
   user.passwordChangedAt = Date.now() - 1000;
 
-  // 4) logiraj korisnika - posljai JWT na prontend klijent
-  const token = signToken(user._id);
+  // 4) logiraj korisnika - posljai JWT token korisniku
 
-  res.status(200).json({
-    status: 'success',
-    token
-  });
+  //10-15 zamjena koda koji se ponavlja sa funkcijom
+  createSendToken(user, 200, res);
+  // const token = signToken(user._id);
+
+  // res.status(200).json({
+  //   status: 'success',
+  //   token
+  // });
+});
+
+//10-15 ako logiran korisnik hoce promjeniti password..
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  //za provjeru mora unijeti trenutni password
+
+  // 1) dohvati korsinika iz kolekcije
+  // ovo radi logiran korsinik, a pomocu protected middlewarea vec imam user objekt u requestu
+  // moram explicitno navesti polje password da mi vrati, jer incae password se ne salje u dokumentu koji se dohvati iz DB
+  const user = await User.findById(req.user.id).select('+password');
+  if (!user) {
+    return next(new AppError('There is no user with that email address', 404));
+  }
+
+  // 2) provjeri dali je POSTani password tocan sa instance metodom correctPassword()
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError('Your current password is incorrect', 401));
+  }
+
+  // 3) update the password - ako prodje dovde
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+
+  // validacija (usporedba password i passwordConfirm) ce biti automatski zbog toga sto je na userSchema stavljen validator
+  // a PRE_HOOK ce hashirati password i obrisati passwordConfirm, jer radi prilikom svakog sejvanja dokumenta
+  await user.save();
+
+  // 4) logiraj korisnika sa novim passwordom
+
+  //10-15 zamjena koda koji se ponavlja sa funkcijom
+  createSendToken(user, 200, res);
+  // const token = signToken(user._id);
+
+  // res.status(200).json({
+  //   status: 'success',
+  //   token
+  // });
 });

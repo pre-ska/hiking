@@ -327,7 +327,7 @@
     <li>
       za ovu funkcionalnost napravit cu PRE-HOOK koja ce provjeriti dali je
       password promjenjen i AKO JE!!! -- onda ce napraviti i property
-      <b>cahngedPasswordAt</b>
+      <b>passwordChangedAt</b>
     </li>
     <li>
       jos cu provjeriti da nije novi dokument, jer i prilikom novog dokumenta
@@ -346,5 +346,28 @@
       nakon sto sam promjenio password, i sve ostalo... izdam novi token i
       posaljem ga na fromtend
     </li>
+    <h1>UPDATE PASSWORD 10-15</h1>
+    <i
+      >ako korisnik zeli promjeniti password... prethodno je bilo ako je
+      zaboravio password </i
+    ><br /><br />
+    <i>za ovo je potrebno da korsinik prilozi trenutni password</i>
+    <h3>authController.js</h3>
+    <li>kreiram <b>updatePassword</b> metodu</li>
+    <li>
+      dohvatim korsinika po ID-ju, koji je u requestu pod user i explicitno
+      zatrazim da dobijem i password polje
+    </li>
+    <li>
+      na svakom user dokumentu imam metodu (static instance method) koja se zove
+      <b>correctPassword</b>, napravljena u <b>userModel.js</b>
+    </li>
+    <li>
+      tu metodu korsitim da bi ispitao prilozeni trenutni password sa onim koji
+      je u DB
+    </li>
+
+    <h3>userRouter.js</h3>
+    kreiram rutu za update passworda <b>updateMYPassword</b>
   </body>
 </html>

@@ -12,8 +12,16 @@ router.post('/login', authController.login);
 
 //10-12
 router.post('/forgotPassword', authController.forgotPassword);
+
 //10-13
 router.patch('/resetPassword/:token', authController.resetPassword);
+
+//10-15 - mijenjam user document - zato patch
+router.patch(
+  '/updateMyPassword',
+  authController.protect,
+  authController.updatePassword
+);
 
 router
   .route('/')
