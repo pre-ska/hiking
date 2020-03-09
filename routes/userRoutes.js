@@ -23,6 +23,9 @@ router.patch(
   authController.updatePassword
 );
 
+//10-16 - ruta za mijenjanje samo username i password
+router.patch('/updateMe', authController.protect, userController.updateMe);
+
 router
   .route('/')
   .get(userController.getAllUsers)

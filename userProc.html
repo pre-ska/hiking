@@ -368,6 +368,28 @@
     </li>
 
     <h3>userRouter.js</h3>
-    kreiram rutu za update passworda <b>updateMYPassword</b>
+    <li>kreiram rutu za update passworda <b>updateMyPassword</b></li>
+
+    <h1>UPDATE USER DATA 10-16</h1>
+    <h3>userRoutes.js</h3>
+    <li>dodam novu rutu <b>/updateMe</b></li>
+
+    <h3>userController.js</h3>
+    <li>
+      kreiram metodu <b>updateMe()</b> u kojoj sam korisnik moze promjeniti
+      username i email podatke
+    </li>
+    <li>
+      iz request izvucem novo ime ili email i koristim
+      <b>User.findByIdAndUpdate()</b>
+    </li>
+    <li>
+      zato što <b>save()</b> metoda zahtjeva autorizaciju i neka REQUIRED polja
+      u modelu kao npr. passwordConfirm...a to ovdje nemam i netrebam
+    </li>
+    <li>
+      sa ovim je user updejtan u DB, i vratim natrag updejtanog usera na
+      klijentsku stranu u responsu
+    </li>
   </body>
 </html>
