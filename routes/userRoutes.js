@@ -26,6 +26,9 @@ router.patch(
 //10-16 - ruta za mijenjanje samo username i password
 router.patch('/updateMe', authController.protect, userController.updateMe);
 
+//10-17 - ruta za brisanje korisnika
+router.delete('/deleteMe', authController.protect, userController.deleteMe);
+
 router
   .route('/')
   .get(userController.getAllUsers)

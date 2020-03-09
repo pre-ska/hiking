@@ -5,8 +5,6 @@ const AppError = require('../utils/appError'); //10-16
 //10-16 ova funkcija mi filtrira req. body i ostavi samo email i name prilikom upddejta
 // da slucajno nebi bilo i nesto drugo npr. role: 'admin'...to bi bio sigurnosni propust
 const filterObj = (obj, ...allowedFields) => {
-  console.log(allowedFields);
-  console.log(obj);
   const newObj = {};
   Object.keys(obj).forEach(el => {
     if (allowedFields.includes(el)) newObj[el] = obj[el];
@@ -46,8 +44,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   // zelim striktno da mi updejta samo name i email.
   // to ova funkcija radi, ostavi samo polja u req. body koja sam ja definirao
   const filteredBody = filterObj(req.body, 'name', 'email');
-  console.log(req.user.id);
-  console.log(filteredBody);
   //3) update user document
   //...new: true u optionsima znaci da mi vrati updejtan objekt
   // runValidators: true korsitim zbog toga ako korsinik unese neisparavan email ili ime koje ima manje od 3 znaka...
@@ -63,6 +59,16 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+//10-17 - korisnik zeli obrisati svoj acc - stavljam njegov dokument na active: false
+exports.deleteMe = async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+  res.status(204).json({
+    //204 deleted
+    status: 'success',
+    data: null
+  });
+};
 
 exports.getUser = (req, res) => {
   res.status(500).json({

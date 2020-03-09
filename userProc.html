@@ -391,5 +391,29 @@
       sa ovim je user updejtan u DB, i vratim natrag updejtanog usera na
       klijentsku stranu u responsu
     </li>
+    <h1>DELETE USER 10-17</h1>
+    <i
+      >kada korisnik obrise svoj account, ne brisem njegov dokument iz DB, vec
+      stavimt taj dokument/account da bude <b>inactive</b></i
+    >
+    <h3>userModel.js</h3>
+    <li>kreiram novi property u userSchema --> <b>active</b></li>
+    <h3>userController.js</h3>
+    <li>kreiram metodu <b>deleteMe()</b></li>
+    <h3>userModel.js</h3>
+    <li>
+      da bi koristio to polje <b>active</b>, implementirat cu
+      <b>query Middleware</b>
+    </li>
+    <li>
+      <i>
+        4 types of middleware: document middleware, model middleware, aggregate
+        middleware, and query middleware</i
+      >
+    </li>
+    <li>
+      to je pre-hook koji filtrira rezultat po tome dali je neki dokument
+      <b>active</b> ili ne
+    </li>
   </body>
 </html>

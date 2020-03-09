@@ -50,7 +50,13 @@ const userSchema = new mongoose.Schema({
   },
   passwordChangedAt: Date, //10-9 zbog kontrole passworda dali je promjenjen
   passwordResetToken: String,
-  passwordResetExpires: Date
+  passwordResetExpires: Date,
+  active: {
+    // dali je korisniko racun aktivan ili ne
+    type: Boolean,
+    default: true,
+    select: false // ovo znaci da ovaj prop ACTIVE nece biti dostupan klijentskoj strani na uvid kada vratim user dokument, zivi samo u DB
+  }
 });
 
 //10-4 hashing password bcrypt - PRE-HOOK
@@ -74,6 +80,19 @@ userSchema.pre('save', function(next) {
 
   // a ako prodje, onda zapisi novi property passwordChangedAt u user dokument
   this.passwordChangedAt = Date.now();
+
+  next();
+});
+
+// https://mongoosejs.com/docs/middleware.html  --- TIPOVI MIDDLEWAREA
+//10-17 pre-hook - QUERY MIDDLEWARE - za provjeru dali je korsinik ACTIVE ili ne (tj obrisan)
+// query je FIND
+// korsitim regular expression tako da mi sve sto pocinje sa find koristi ovaj middleware
+// find, findById...
+userSchema.pre(/^find/, function(next) {
+  // THIS = current query - trenutna pretraga koja ce se nadopuniti
+  // znaci prije rezultata svake pretrage ovaj middleware jos dodatno filtrira po ACTIVE
+  this.find({ active: { $ne: false } }); //not equal to false - jer ako stavim samo active: true...onda dokumenti koji nemau uopce polje active nece biti dohvaceni
 
   next();
 });
