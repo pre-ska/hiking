@@ -110,7 +110,7 @@
     </li>
     <li>
       napravi error handler za JWT invalid token i za token expired - u
-      <b>errorControler.js</b>
+      <b>errorController.js</b>
     </li>
     <li>provjeri dali korsinik za kojeg je izdan token jos postoji</li>
     <li>
@@ -414,6 +414,101 @@
     <li>
       to je pre-hook koji filtrira rezultat po tome dali je neki dokument
       <b>active</b> ili ne
+    </li>
+    <li>
+      za svaku query metodu koja pocinje sa <b>find...</b> taj pre hook ce se
+      aktivirat
+    </li>
+    <h1>JWT via COOKIE 10-19</h1>
+    <i
+      >zbog sigurnosti bolje je slati JWT kao HTTPOnly cookie, jer tada browser
+      moze samo primati i slati token, a ne i mjenjati ga</i
+    >
+    <h3>authController.js</h3>
+    <li><b>cookie</b> je textualni podatak koji server salje klijentu</li>
+    <li>klijent ce ga spremiti i slati sa svim buducim requestovima</li>
+    <li>
+      do sada sam slao JWT u response objektu, ali bolje ga je slati kao cookie
+    </li>
+    <li>u <b>createSendToken</b> metodi dodat cu cookie u response</li>
+    <li>
+      kreiram <i>enviroment</i> varijablu <b>JWT_COOKIE_EXPIRES_IN</b> koja mi
+      je bolja za javascript jer je jedinstveni broj
+    </li>
+    <li>
+      kreiram cookie pomocu <b>res.cookie</b> i u njega stavim ime (JWT),
+      vrijednost (sam token) i opcije (expires, secure....)
+    </li>
+    <li>NAPOMENA:---------------------</li>
+    <li>
+      u <b>userModel.js</b> u <b>userSchema</b> za password field sam stavio
+      <b>select: false</b>
+    </li>
+    <li>
+      to znaci kada dobijem user dokument (ili vise njih) od servera, da ti
+      dokumenti nece sadrzavati <b>password</b> field/property u user objektu
+    </li>
+    <li>
+      medjutim, prilikom kreiranja dokumenta to pravilo ne vrijedi, pa cu u
+      <b>createSendToken</b> metodi, nakon sto kreiram token i cookie, postaviti
+      <b>user.password = undefine</b>
+    </li>
+    <li>
+      to ce izbrisati password polje iz user objekta koji ide prema klijentu kao
+      response
+    </li>
+    <li>--------------------------------</li>
+    <h1>RATE LIMITING 10-20</h1>
+    <i>sprijecava visetruke requestove prema mom API-ju</i><br />
+    <i>tako sprijecavam napade tipa <b>DoS</b> ili <b>brute force</b></i>
+    <h3>app.js</h3>
+    <li><b>rate limiter</b> implementiram kao glabalni middleware</li>
+    <li>
+      <b>rate limiter</b> broji requestove sa odredjenog IP-ja, i ako ih ima
+      previse blokira sve daljnje
+    </li>
+    <li><b>global middleware</b> implementiram u app.js</li>
+    <li>koristit cu <i>npm packege</i> zvan <b>express rate limit</b></li>
+    <li>
+      prvo napravim funkciju <b>limiter</b> gdje definiram sve opcije (max, time
+      window i message)
+    </li>
+    <li>
+      napravim middleware koji sve rute na <b>/api</b> provjerava sa
+      <b>limiter funkcijom</b>
+    </li>
+    <h1>SECURITY HTTP HEADERS 10-21</h1>
+    <i>za to koristim npm paket <b>helmet</b></i
+    ><br />
+    <i>svaki express app treba korsititi <b>helmet</b></i>
+    <h3>app.js</h3>
+    <li>instaliram i uvezem helmet sa <i>require</i></li>
+    <li>
+      <b>app.use(helmet())</b> to je sve sto trebam... ovo stvori security
+      headere automatski
+    </li>
+    <li>treba ici na pocetak (pri vrhu) app-a</li>
+    <h1>DATA SANITIZATION 10-22</h1>
+    <i>ciscenje podataka koji dolaze u requestu</i>
+    <h3>app.js</h3>
+    <li>instaliram <b>express-mongo-sanitize</b></li>
+    <li>data sanitization against NoSQL query injections</li>
+    <li>
+      taj paket ukloni $ i (.) iz requestova i parametar , tako da mongoDb
+      operatori ne mogu raditi
+    </li>
+    <li>instaliram <b>xss-clean</b></li>
+    <li>data sanitization against XSS atatcks - cross site scripting</li>
+    <li>taj paket ukloni $bilo koji HTML kod iz korisnickog inputa</li>
+    <h1>PREVENTING PARAMETAR POLUTION 10-23</h1>
+    <i>izbjegavanje duplikata u parametrima</i><br />
+    <i>za ovo korsitim <i>npm paket</i> <b>hpp</b> (http parametar polution)</i>
+    <h3>app.js</h3>
+
+    <li>instaliram i require <b>hpp</b></li>
+    <li>
+      napravim middleware sa <b>hpp()</b>, jos dodam i whitelist za dozvoljena
+      polja koja se mogu ponavljati u parametrima
     </li>
   </body>
 </html>

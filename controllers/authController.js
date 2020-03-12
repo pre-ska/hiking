@@ -17,9 +17,28 @@ const signToken = id => {
 };
 
 //10-15 kod koji se cesto ponavlja pa sam ga izvukao u zasebnu funkciju
+// ovdje kreiram token i saljem ga sa user dokumentom prema klijentu
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
+  /******************************************* */
+  //10-19
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    // secure: true, // https - ovaj dio treba biti aktivan sam u produkciji
+    httpOnly: true //ovo kazecookie ne moze biti modificarn od strane browsera
+  };
+
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
+
+  res.cookie('jwt', token, cookieOptions);
+
+  // da mi ne salje password prema klijentu, novo kreiran dokument sadrzi password iako sam stavio select: false u modelu...to je samo za save valid
+  user.password = undefined;
+
+  /******************************************* */
   res.status(statusCode).json({
     status: 'success',
     token,
