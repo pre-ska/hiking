@@ -167,6 +167,18 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
+//11-7 query-pre-hook koji popuni "guides" niz sa dokumentima umjesto IDja...
+// ovaj hook vrijedi za sve tours quierije koji pocinju sa "find"
+tourSchema.pre(/^find/, async function(next) {
+  // U QUERY MIDDLEWAREU "THIS" SE UVIJEK ODNOSI NA TRENUTNI QUERY = PRETRAGU
+  this.populate({
+    path: 'guides', // sta zelim da mi bude "populate" prilikom querija
+    select: '-__v -passwordChangedAt' // koja polja NE ZELIM da mi ubaci u embeded objekt
+  });
+  next();
+});
+
+// pre hook - primjera koji samo baca na konzolu
 tourSchema.post(/^find/, function(docs, next) {
   //  post-save middleware(hook) ima doc i next (poslije snimanja dokumenta)
   console.log(`query took ${Date.now() - this.start} ms`);
@@ -180,7 +192,7 @@ tourSchema.pre('aggregate', function(next) {
 
   // izbaci seacretTour iz aggregationa, tako da u pipline dodaš novi match filter
   // pipleine je array, novi filter ubaci na prvo mjesto
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } }); //seacretTour: false istp prolazi
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } }); //ovo je NOT EQUAL = true ... seacretTour: false isto prolazi
 
   next();
 });

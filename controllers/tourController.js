@@ -138,9 +138,10 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
 exports.getTour = catchAsync(async (req, res, next) => {
   // try {
-  const tour = await Tour.findById(req.params.id).populate('guides'); // poplate sam dodao u 11-7
+  // poplate sam dodao u 11-7...ali sam ga prebacio u pre-hook u tourModel.js
+  const tour = await Tour.findById(req.params.id);
   // shorthand iz mongoose za :
-  // Tour.findOne({_id: req.params.id})
+  // Tour.findOne({_id: req.params.id}) // isto kao findById
 
   if (!tour) {
     // 9-8

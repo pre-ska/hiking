@@ -33,27 +33,29 @@
     <li>importam tours file sa koordinatama</li>
     <h2>embedding documents</h2>
     <li>kada kreiram turu, dodam niz ID-jeva od gudes (vodica)</li>
-    <li>
-      zatim cu napraviti da se ti user dokumenti (koji su isti kao i guide doc)
-      embedaju automatski u tour document prilikom sejvanja tog dokumenta
-    </li>
-    <li>
-      to automatsko embedanje cu napraviti sa <b>pre-save</b> middlewareom
-      (hook-om)
-    </li>
+    <strike>
+      <li>
+        zatim cu napraviti da se ti user dokumenti (koji su isti kao i guide
+        doc) embedaju automatski u tour document prilikom sejvanja tog dokumenta
+      </li>
+      <li>
+        to automatsko embedanje cu napraviti sa <b>pre-save</b> middlewareom
+        (hook-om)
+      </li>
 
-    <li>
-      uvezem <b>userMode.js</b> kao <b>User</b> varijablu - trebam citati
-      kolekciju usera
-    </li>
-    <li>
-      to koristim u pre-hooku kada radim loop (map) po nizu ID-ja u
-      <b>guides</b> propertiju
-    </li>
-    <li>
-      trebam imati user model importan jer na njemu korsitim metode
-      <b>findById</b>
-    </li>
+      <li>
+        uvezem <b>userMode.js</b> kao <b>User</b> varijablu - trebam citati
+        kolekciju usera
+      </li>
+      <li>
+        to koristim u pre-hooku kada radim loop (map) po nizu ID-ja u
+        <b>guides</b> propertiju
+      </li>
+      <li>
+        trebam imati user model importan jer na njemu korsitim metode
+        <b>findById</b>
+      </li></strike
+    >
     <li>NAPOMENA:-------------------</li>
     <li>
       ovaj postupak je async (dohvacanje po ID-ju iz metoda dokumenta) pa na
@@ -106,6 +108,20 @@
     <li>
       POPULATING RADI SAMO NA ONIM QUERIJIMA NA KOJEM SAM GA EXPLICITNO
       DEFINIRAO....ne na svima
+    </li>
+    <li>
+      posto zelim da mi <i>populate</i> radi na <b>getTour</b> i na
+      <b>getAllTours</b>, trebao bi kopirati ovaj kod i u drugu metodu
+    </li>
+    <li>
+      medjutim, da ne ponavljam kod, napravit cu <i>pre-hook middleware</i> za
+      ove querije koji ce automatski popuniti <i>guides</i> polja sa dokumentima
+      vodica/usera umjesto IDja
+    </li>
+    <h3>tourModel.js</h3>
+    <li>
+      dodam novci pre-hook middleware za popunjavanje "guides" sa stvarnim
+      dokumentima/objektima niza umjesto IDja
     </li>
   </body>
 </html>
