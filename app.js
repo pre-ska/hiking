@@ -4,6 +4,7 @@ const rateLimit = require('express-rate-limit'); //10-20
 const helmet = require('helmet'); //10-21
 const mongoSanitize = require('express-mongo-sanitize'); //10-22
 const xss = require('xss-clean'); //10-22
+const hpp = require('hpp'); //10-23
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController'); //10-20

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 // const validator = require('validator');
+// const User = require('./userModel');//11-4
 
 /******************************************** */
 // schema i model
@@ -81,9 +82,43 @@ const tourSchema = new mongoose.Schema(
     },
     startDates: [Date],
     secretTour: {
+      // ovo je schemaType options objekt
       type: Boolean,
       default: false
-    }
+    },
+    startLocation: {
+      //11-4 GeoJSON - ovo je doslovno embeded object - ne schemaType options
+      type: {
+        //ovo je schemaType options
+        type: String,
+        default: 'Point', // zelim da po defaultu bude point - tocka
+        enum: ['Point'] // zeli da samo i prima point kao tip i nista vise
+      },
+      coordinates: [Number], // prima niz brojeva
+      address: String,
+      description: String
+    },
+    //11-4
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number
+      }
+    ],
+    // child references by ID 11-6
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User' // kako povezati razlicite datasetove - cita User model - nemoram niti importirati User dokument
+      }
+    ]
   },
   {
     // 8-23 object for the options
@@ -97,13 +132,11 @@ tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
 
-/*
-  4 middleware in mongoose:
-  document, query, aggregate, model - 4 middleware in mongoose
-*/
+/*!!!! 4 MIDDLEWARE IN MONGOOSE: document, query, aggregate, model !!!!*/
 /////////////////////////////////////////////////////////////////
 
-//************ DOCUMENT MIDDLEWARE: runs before .save() & .create() //8-24
+//************ DOCUMENT MIDDLEWARE: runs before .save() & .create()
+//8-24
 tourSchema.pre('save', function(next) {
   //  mongoose isto ima next kao i express
   //console.log(this); // this se odnosi na dokument koji je trenutno u procesu/sejvanju
@@ -111,11 +144,19 @@ tourSchema.pre('save', function(next) {
   next();
 });
 
+// //11-4 pre-hook za embedanje user dokumenata u tour dokument (vodica) - NE KORISTIM OVO ...SAMO ZA PRIMJER
+// tourSchema.pre('save', async function(next) {
+//   const guidesPromises = this.guides.map(async id => await User.findById(id));
+//   this.guides = await Promise.all(guidesPromises);
+//   next();
+// });
+
 //8-24
 // tourSchema.post('save', function(doc, next) {
 //   //  post-save middleware(hook) ima doc i next (poslije snimanja dokumenta)
 // });
 
+//************************************/
 //************ QUERY MIDDLEWARE 8-25
 // primjeni middleware na sve querije koji pocinju sa find
 // .find(), .findOne()=findById()

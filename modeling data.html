@@ -4,8 +4,108 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        margin: 50px;
+        padding-top: 50px;
+        font-size: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+      li {
+        margin-left: 20px;
+      }
+    </style>
   </head>
   <body>
-    <h1>11</h1>
+    <h1>--------------------------11---------------------</h1>
+    <h1>MODELING LOCATIONS 11-4</h1>
+    <i>geospatial data</i>
+    <h3>tourModel.js</h3>
+    <li>dodam <b>startLocation</b> u schema</li>
+    <li>dodam <b>locations</b> u schema</li>
+    <li>
+      <b>locations</b> ce biti array, a to automatski znaci da ce to biti
+      embeded dokument ?!?
+    </li>
+    <li>importam tours file sa koordinatama</li>
+    <h2>embedding documents</h2>
+    <li>kada kreiram turu, dodam niz ID-jeva od gudes (vodica)</li>
+    <li>
+      zatim cu napraviti da se ti user dokumenti (koji su isti kao i guide doc)
+      embedaju automatski u tour document prilikom sejvanja tog dokumenta
+    </li>
+    <li>
+      to automatsko embedanje cu napraviti sa <b>pre-save</b> middlewareom
+      (hook-om)
+    </li>
+
+    <li>
+      uvezem <b>userMode.js</b> kao <b>User</b> varijablu - trebam citati
+      kolekciju usera
+    </li>
+    <li>
+      to koristim u pre-hooku kada radim loop (map) po nizu ID-ja u
+      <b>guides</b> propertiju
+    </li>
+    <li>
+      trebam imati user model importan jer na njemu korsitim metode
+      <b>findById</b>
+    </li>
+    <li>NAPOMENA:-------------------</li>
+    <li>
+      ovaj postupak je async (dohvacanje po ID-ju iz metoda dokumenta) pa na
+      kraju dobijem niz promisa u nizu koji dohvacaju dokumente tih korisnika
+    </li>
+    <li>
+      nakon sto izvrtim niz promise i dobijem dokumente vodica, odmah taj niz
+      pridodam na polje <b>guides</b> u tour dokumentu (tj. pregazim stari niz
+      IDjeva)
+    </li>
+    <li>------------------------------</li>
+    <li>
+      djabe si krecio - ovo je bio samo primjer embedinga - podaci o vodicima se
+      mogu promjeniti npr email, a ovo sto je embedano ce ostati pogresno
+    </li>
+    <li>
+      zato je bolje napraviti child reference na dokumente a ne embedati ih
+      direktno
+    </li>
+    <li>
+      jednostavno u <b>guides</b> polje od tourModela uvrstim specijalnu
+      referencu od mongoosa na IDjeve iz User modela...nemoramimportat User
+      model za ovo
+    </li>
+    <h2>populating tour guides 11-7</h2>
+    <i
+      >znaci, prilikom snimanja ture, korsitim samo IDjeve od vodica u
+      <b>guides</b> nizu... i to tako da koristim specijalnu mongoose ID
+      referencu</i
+    ><br />
+    <i
+      >ali kada dohvacam ture, automatski po tim IDjevima popunim tour dokument
+      sa dokumentima vodica, pa to izgleda kao da su stalno bili
+      <b>embedded</b></i
+    >
+    <br />
+    <i
+      >takav proces se zove <b>populating</b>...kada u query-ju autamtski dodam
+      nesto sa <b>populate()</b> metodom</i
+    >
+    <h3>tourController.js</h3>
+    <li>
+      u <b>getTour()</b> metodi, imam query <b>Tour.findById()</b>.... tu sad
+      dodam <i>populate</i> na kraju
+    </li>
+    <li>
+      SAMO DODAM na query <b>.populate('guides')</b> ... to ce autmatski izvuci
+      one IDjeve iz guides niza i popuniti ih sa dokumentima iz User kolekcije
+    </li>
+    <li>
+      POPULATING RADI SAMO NA ONIM QUERIJIMA NA KOJEM SAM GA EXPLICITNO
+      DEFINIRAO....ne na svima
+    </li>
   </body>
 </html>
