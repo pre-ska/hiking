@@ -123,5 +123,43 @@
       dodam novci pre-hook middleware za popunjavanje "guides" sa stvarnim
       dokumentima/objektima niza umjesto IDja
     </li>
+    <h2>reviews model</h2>
+    <li>kreiram <b>reviewModel.js</b> u modelima</li>
+    <li>kreiram <b>reviewSchema</b></li>
+    <li>kreiram model sa exportom</li>
+    <h3>reviewController.js</h3>
+    <li>napravim <b>getAllReviews</b></li>
+    <li>napravim <b>createReview</b></li>
+    <h3>reviewRoutes.js</h3>
+    <li>kreiram router</li>
+    <h3>app.js</h3>
+    <li>importiram <b>reviewRouter</b></li>
+    <li>
+      <i>mountam /api/v1/routes</i> tako da sve metode iz tog routera spadaju
+      pod ovu rutu
+    </li>
+    <li>sada je taj router u biti middleware na ovoj ruti</li>
+    <h3>reviewRoutes.js</h3>
+    <li>
+      pod <b>"/"</b> rutom imam GET metodu <b>getAllReviews</b> i POST metodu
+      <b>creteReview</b>
+    </li>
+    <li>
+      samo <i>authenticated</i> korisnici mogu pristupiti POST metodi i kreirati
+      novi review
+    </li>
+    <li>
+      zato prvo dodam <b>authController.protect</b> prije kreiranja review-a (u
+      POST-u)
+    </li>
+    <li>
+      zatim dodam jos i <b>authController.restrictTo('user')</b> tako da samo
+      <i>authenticated users</i> sa rolom (ulogom) usera mogu postati reviews
+    </li>
+    <h2>populateing reviews with user and the tour data</h2>
+    <li>
+      kada dohvacam reviws zelim da mi automatski popuni podatke o turi i
+      korsiniku koji je napisao taj review
+    </li>
   </body>
 </html>
