@@ -132,6 +132,14 @@ tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
 
+//11-11 ovo je "virtual populate" - ne zelim direktno cuvati sve IDjeve od child reviews u tour dokumentu
+// https://mongoosejs.com/docs/tutorials/virtuals.html#populate
+tourSchema.virtual('reviews', {
+  ref: 'Review', // na koji model se referenciram
+  foreignField: 'tour', // koje polje u referentom modelu zamjenjujem
+  localField: '_id' // polje po kojem vezem lokalni model sa foreign modelom
+});
+
 /*!!!! 4 MIDDLEWARE IN MONGOOSE: document, query, aggregate, model !!!!*/
 /////////////////////////////////////////////////////////////////
 

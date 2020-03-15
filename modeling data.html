@@ -156,10 +156,85 @@
       zatim dodam jos i <b>authController.restrictTo('user')</b> tako da samo
       <i>authenticated users</i> sa rolom (ulogom) usera mogu postati reviews
     </li>
-    <h2>populateing reviews with user and the tour data</h2>
+    <h2>populating reviews with user and the tour data 11-10</h2>
     <li>
       kada dohvacam reviws zelim da mi automatski popuni podatke o turi i
       korsiniku koji je napisao taj review
+    </li>
+    <h3>reviewModel.js</h3>
+    <li>napravim <b>pre-hook</b> za bilo koji <b>"find"</b> u kolekciji</li>
+    <li>
+      taj <i>query middleware</i> ce mi automatski zamjeniti polja <b>tour</b> i
+      <b>user</b> sa njihovim podacima iz konkretnih dokumenata... (npr ime
+      ture, ime kosinika, foto korisnika itd)
+    </li>
+    <li>
+      u database-u je u tim poljima samo ID (od ture ili korisnika)....tako da u
+      tom trenutku napravim nove querije i oni dohvate trazene dokiumente po
+      IDju, zatim uzmu samo one podatke koje sam ja naznacio i embeda taj objekt
+      na mjesto ture ili usera u review dokument
+    </li>
+    <h2>virtual populate 11-11 (tours and reviews)</h2>
+    <li>
+      u <i>reviews</i> sam napravio tkz. <i>parent referencing</i> tj. dodao sam
+      IDjeve od ture u svaki review kojoj taj review pripada
+    </li>
+    <li>
+      to znaci da <b>review zna svoju parent turu</b>, ali
+      <b>tura ne zna koji sve reviews njoj pripadaju</b>
+    </li>
+    <li>solucije:</li>
+    <li>
+      svaki puta kada dohvaca turu da vrsim pretragu reviewsa i testiram koji
+      ima ID od te ture --- glupo
+    </li>
+    <li>
+      napravim <i>child referencing</i> u turi.... niz svih reviews IDja koje
+      pripadaju toj turi... taj niz moze rasti beskonacno.... pa mi ta opcija ne
+      odgovara
+    </li>
+    <li>mongoose ima nesto sto se zove <b>virtual populate</b>!!!!!!</li>
+    <li>
+      radi isto kao i kada bi snimao sve IDjeve od reviewsa u neki array ali taj
+      arraj u biti nije snimljen u tour dokumentu u DB...
+    </li>
+    <h3>tourModel.js</h3>
+    <li>
+      to radim tako da u <b>tourModel</b> napravim <b>.virtual()</b> metodu na
+      schemi
+    </li>
+    <li>ta metoda ce kreirati <b>reviews</b> polje</li>
+    <li>uzet ce kao referencu <b>Review</b> model <i>ref: 'Review'</i></li>
+    <li>
+      <b>foreignField</b> je ime polja koje citam u <i>Review modelu</i>, u ovom
+      slucaju <b>tour</b>
+    </li>
+    <li>
+      <b>localField</b> je ime polja koje citam iz trenutnog (Tour) modela, u
+      ovom slucaju to je <b>_id</b>
+    </li>
+    <li>
+      znaci ono sto mi je zapisano u <i>Review modelu</i> pod <b>tour</b>, to mi
+      je u ovom modelu pod <b>_id</b>
+    </li>
+    <li>
+      na ovaj nacin vezem dva modela....virtualnom vezom.... valjda je to
+      nekakvo indexirtanje u pozadini
+    </li>
+
+    <li>
+      nadalje, koristim <b>populate</b> metodu na obican nacin, kao da imam
+      realne nizove IDja u reviews polju (to polje je virtualno)
+    </li>
+    <li>
+      ovaj nacin virtual populate radim samo na get one tour a ne kada dohvacam
+      sve ture
+    </li>
+    <h3>reviewsModel.js</h3>
+    <li>
+      zbog lancanog vezanja tura-review-tura u populate funkcionalnosti imam
+      previse qurija...pa cu izbaciti tours iz populate za reviews...ostat ce
+      samo IDjevi od toura za koju je review napisan
     </li>
   </body>
 </html>

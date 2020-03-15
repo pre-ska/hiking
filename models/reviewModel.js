@@ -37,6 +37,28 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+//11-10 query-pre-hook koji popuni "tour" i "user" sa dokumentima umjesto IDja...
+// ovaj hook vrijedi za sve REVIEWS quierije koji pocinju sa "find"
+reviewSchema.pre(/^find/, async function(next) {
+  // U QUERY MIDDLEWAREU "THIS" SE UVIJEK ODNOSI NA TRENUTNI QUERY = PRETRAGU
+  // this.populate({
+  //   path: 'tour', // sta zelim da mi bude "populate" prilikom querija
+  //   select: 'name' // koja polja ZELIM SAMO da mi ubaci u embeded objekt, sa (-) MINUS mogu izbaciti koje ne zelim
+  // }).populate({
+  //   path: 'user', // sta zelim da mi bude "populate" prilikom querija
+  //   select: 'name photo' // koja polja ZELIM SAMO da mi ubaci u embeded objekt, sa (-) MINUS mogu izbaciti koje ne zelim
+  // });
+
+  // prije sam imao da mi polute radi i tour i user
+  // maknio sam iz gornjeg koda da mi svaki review bude popunjen i sa turom... lancanom reakcijom u svakom dohvacanju ture, dohvacam i review, pa onda opet za svaki review turu.... nepotrebno i zahtjevno
+  this.populate({
+    path: 'user', // sta zelim da mi bude "populate" prilikom querija
+    select: 'name photo' // koja polja ZELIM SAMO da mi ubaci u embeded objekt, sa (-) MINUS mogu izbaciti koje ne zelim
+  });
+
+  next();
+});
+
 /******************************************** */
 const Review = mongoose.model('Review', reviewSchema);
 /******************************************** */
