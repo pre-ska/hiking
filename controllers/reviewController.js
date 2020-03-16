@@ -4,7 +4,17 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  /** 11-14 -------
+   * provjerim dali u parametrima imam tour ID
+   * ako ima onda ce to biti filter u "find()"
+   * ako nema onda ce filter biti prazan objekt
+   * i dohvatit ce sve reviewse kao i obicno */
+  let filter = {};
+  if (req.params.tourId) filter = { tour: req.params.tourId };
+
+  /*******************************************************/
+
+  const reviews = await Review.find(filter); // 11-14 dodao filter u query
 
   res.status(200).json({
     status: 'success',

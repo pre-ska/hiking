@@ -6,7 +6,7 @@ const reviewRouter = require('../routes/reviewRoutes'); //11-13
 
 const router = express.Router();
 
-/************ blok iz 11-12 i 11-13 ************************/
+/************ blok iz 11-12 i 11-13 i 11-14 ************************/
 // //11-12 ruta za reviews - POST - treba korisnik biti autoriziran, restricted na user role
 // // 11-13 OVO CU ZAMJENITI SA MOUNTANIM RUTEROM IZ REVIEWSA PA CU IMATI SVOJEVRSNI REDIRECT
 
@@ -22,6 +22,7 @@ const router = express.Router();
 // jer zelim da mi za sve reviews funkcije bude odgovoran reviewRouter
 // router je u biti middleware i samo nastavim pipeline dalje u reviewRouter
 router.use('/:tourId/reviews', reviewRouter);
+
 /*************************************************************/
 
 //6-18 definiram koji specificni param tražim ... NIJE VISE POTREBNO...za pravi db

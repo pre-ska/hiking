@@ -16,14 +16,4 @@ router
     reviewController.createReview
   );
 
-router
-  .route('/:id')
-  .get(reviewController.getAllReviews)
-  .patch(reviewController.updateReview)
-  .delete(
-    authController.protect,
-    // authController.restrictTo('admin', 'lead-guide'),
-    reviewController.deleteReview
-  );
-
 module.exports = router;

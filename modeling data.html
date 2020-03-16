@@ -288,8 +288,10 @@
     <li>
       valjda zato sto kada kreiram novi review, moram znati (iz URLa) za koju
       turu se on radi...pa mi je nestani route bolji, jer on spada pod
-      <b>tourRoutes</b>....valjda cu kasnije makniti one rute iz
-      reviewControlera kao nepotrebne
+      <b>tourRoutes</b>....znaci ruta koja zapocinje sa tours i sadrzi ID od
+      ture za koju se pise review, biva redirektana na reviews router i tamo cu
+      pomocu <i>mergeParams</i> dobiti ID od ture...inace nebi znao taj ID sa
+      direktnim review rutama ....a ne pisem vise u req.body ID od ture
     </li>
 
     <li>
@@ -318,6 +320,26 @@
       valjda zato sto su u novom ruteru imam samo <b>/</b>.... pa ovaj novi
       ruter ne prepoznaje parametar iz starog...zato spajam parametre iz drugih
       rutera u ovaj da budu prepoznati
+    </li>
+    <li>ovo sam radio za POST...sad trebam tako i za GET</li>
+    <li>trenutno imam direktnu rutu koja dohvaca sve reviewse iz svih tura</li>
+    <li>
+      trebam mapraviti isti princip da za odredjenu turu dobijem reviewse a taj
+      ID cu citati iz parametara koje ce biti redirect sa tour routera
+    </li>
+    <h3>reviewController.js</h3>
+    <li>
+      prepravim <b>getAllReviews</b> metodu tako da sada ispitam dali u
+      parametrimam ima ID od rute
+    </li>
+    <li>
+      ako imam, onda filtriram find() sa time --
+      <b>Review.find({tour: req.body.tourId})</b> i dobijem reviewse za pojedinu
+      turu
+    </li>
+    <li>
+      ako nemam <b>tourId</b> onda je find() filter prazan objekt i dobijem sve
+      reviewse od svih tura
     </li>
   </body>
 </html>
