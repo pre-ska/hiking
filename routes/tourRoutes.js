@@ -1,8 +1,28 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
 const authController = require('../controllers/authController');
+// const reviewController = require('../controllers/reviewController'); //11-12
+const reviewRouter = require('../routes/reviewRoutes'); //11-13
 
 const router = express.Router();
+
+/************ blok iz 11-12 i 11-13 ************************/
+// //11-12 ruta za reviews - POST - treba korisnik biti autoriziran, restricted na user role
+// // 11-13 OVO CU ZAMJENITI SA MOUNTANIM RUTEROM IZ REVIEWSA PA CU IMATI SVOJEVRSNI REDIRECT
+
+// router
+//   .route('/:tourId/reviews')
+//   .post(
+//     authController.protect,
+//     authController.restrictTo('user'),
+//     reviewController.createReview
+//   );
+
+//11-13 ovdje mountam reviewRouter tako da radim svojevrsni redirect na ovom URLu api/v1/tours/:tourId/reviews
+// jer zelim da mi za sve reviews funkcije bude odgovoran reviewRouter
+// router je u biti middleware i samo nastavim pipeline dalje u reviewRouter
+router.use('/:tourId/reviews', reviewRouter);
+/*************************************************************/
 
 //6-18 definiram koji specificni param tražim ... NIJE VISE POTREBNO...za pravi db
 // router.param('id', tourController.checkID);

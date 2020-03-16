@@ -16,6 +16,14 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
+  /*************** blok iz 11-12  ALLOVED NESTED ROUTES********************** */
+  // ako u req.body nije specifiran tour ID (doslovno nije ubacen manualno)
+  // onda citam taj ID iz URLa ...iz parametra
+  if (!req.body.tour) req.body.tour = req.params.tourId;
+  //ista stvar i za user ID (autora reviewa)...ovaj ID onda citam iz prethodno ubacenog user objekta, to ubaci auth middleware u req.user
+  if (!req.body.user) req.body.user = req.user.id;
+  /****************************************************** */
+
   const newReview = await Review.create(req.body);
 
   res.status(201).json({

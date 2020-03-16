@@ -233,8 +233,91 @@
     <h3>reviewsModel.js</h3>
     <li>
       zbog lancanog vezanja tura-review-tura u populate funkcionalnosti imam
-      previse qurija...pa cu izbaciti tours iz populate za reviews...ostat ce
+      previse querija...pa cu izbaciti tours iz populate za reviews...ostat ce
       samo IDjevi od toura za koju je review napisan
+    </li>
+    <h2>nested routes 11-12</h2>
+    <i
+      >prilikom kreioranja nove ture, do sada sam manualno ubacivao user ID i
+      tour ID u req.body</i
+    >
+    <br />
+    <i
+      >taj postupak treba sada biti automatski, ID od usera se automatski cita
+      iz trenutno logiranog usera preko autorizacije, a ID od ture se cita iz
+      adrese (parametara)</i
+    >
+    <li>znaci, path za kreiranje novog review-a ce izgledati:</li>
+    <li><b>POST /tour/ireh4hnfdsjh45lvsd - (tour ID)/reviews</b></li>
+    <li>za dohvacanje svih reviewsa od neke ture:</li>
+    <li><b>GET /tour/ireh4hnfdsjh45lvsd - (tour ID)/reviews</b></li>
+    <li>za dohvacanje specificnog reviewa:</li>
+    <li>
+      <b
+        >GET /tour/ireh4hnfdsjh45lvsd - (tour ID)/reviews/sdkjfgh543dsfd -
+        (review ID)</b
+      >
+    </li>
+
+    <h3>tourRoutes.js</h3>
+    <li>uvezem <b>reviewController.js</b> jer ce mi trebati njegove metode</li>
+    <li>kreiram router za <b>/tourId/reviews</b></li>
+    <h3>reviewController.js</h3>
+    <li>
+      u <b>creteReview</b> metodi dodam blok koda koji ce u req.body automatski
+      ubaciti <i>tour ID</i> i <i>user ID</i> iz parametra i user objekta ---ako
+      to vec ne postoji u req.body
+    </li>
+    <li>
+      iako radim npr POST za reviews, ja ih trenutno implementiram preko
+      <b>tour routera</b>, jer reviews su children od tours
+    </li>
+    <li>
+      ova implementacija nestanih ruta je malo zbunjujuca jer smo definirali
+      rutu za kreiranje reviewsa u tour router
+    </li>
+    <li>11-13</li>
+    <li>
+      to cu popraviti koristeci naprednu mogucnost expressa koja se zove
+      <b>merge params</b>
+    </li>
+    <li>
+      NAPOMENA: ja vec imam direkntu rutu za POST reviews u
+      <b>reviewRoutes</b> ....zasto onda trebam i ovu nestanu?!??!
+    </li>
+    <li>
+      valjda zato sto kada kreiram novi review, moram znati (iz URLa) za koju
+      turu se on radi...pa mi je nestani route bolji, jer on spada pod
+      <b>tourRoutes</b>....valjda cu kasnije makniti one rute iz
+      reviewControlera kao nepotrebne
+    </li>
+
+    <li>
+      iz <b>tourRoutes</b> zamjenim <b>reviewController</b> sa
+      <b>reviewRoutes</b> jer mi ne trabju metode vec sam review router
+    </li>
+    <li>
+      napravim novi middleware tako da mountam <b>reviewRouter</b> i sada sve
+      sto dolazi na tom urlu se redirecta u <b>reviewRoutes</b>
+    </li>
+    <h3>reviewRoutes.js</h3>
+    <li>
+      ovaj prijasnji redirect je preusmjerio sve sa
+      <b>api/v1/tours/:tourId/reviews</b> u review router i tamo je primljen kao
+      <b>/</b>
+    </li>
+    <li>
+      znaci isto kao da je originalna ruta bila <b>api/v1/reviews</b> koju radi
+      glavni mountani router za reviews u <b>app.js</b>
+    </li>
+    <li>
+      medjutim, problem je sto se parametri ne prenose u redirectu, pa moram
+      explicitno u review routeru staviti u opcije <i>mergeParams: true</i>
+    </li>
+    <li>
+      valjda zato sto su u novom ruteru imam samo <b>/</b>.... pa ovaj novi
+      ruter ne prepoznaje parametar iz starog...zato spajam parametre iz drugih
+      rutera u ovaj da budu prepoznati
     </li>
   </body>
 </html>
