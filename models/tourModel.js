@@ -127,6 +127,11 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
+//11-21 indexiranje po PRICE-u ... 1 znaci ascending
+// tourSchema.index({ price: 1 });
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 //8-23
 tourSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
