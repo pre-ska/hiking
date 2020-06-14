@@ -1,24 +1,24 @@
-const express = require('express');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit'); //10-20
-const helmet = require('helmet'); //10-21
-const mongoSanitize = require('express-mongo-sanitize'); //10-22
-const xss = require('xss-clean'); //10-22
-const hpp = require('hpp'); //10-23
+const express = require("express");
+const morgan = require("morgan");
+const rateLimit = require("express-rate-limit"); //10-20
+const helmet = require("helmet"); //10-21
+const mongoSanitize = require("express-mongo-sanitize"); //10-22
+const xss = require("xss-clean"); //10-22
+const hpp = require("hpp"); //10-23
 
-const AppError = require('./utils/appError');
-const globalErrorHandler = require('./controllers/errorController'); //10-20
-const tourRouter = require('./routes/tourRoutes');
-const userRouter = require('./routes/userRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
+const AppError = require("./utils/appError");
+const globalErrorHandler = require("./controllers/errorController"); //10-20
+const tourRouter = require("./routes/tourRoutes");
+const userRouter = require("./routes/userRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
 
 const app = express();
 
 //////////////////    GLOBAL MIDDLEWARES ////////////////////////////////////////////////////////
 
 //development log
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
 }
 
 /********************************************/
@@ -31,18 +31,18 @@ const limiter = rateLimit({
   //ovdje definiram 100 requestova po satu maximalno
   max: 100, // maximalni broj requestova
   windowMs: 60 * 60 * 1000, // u milisekindama
-  message: 'Too many request from this IP. Please try again in an hour' // poruka ako se prijedje limit
+  message: "Too many request from this IP. Please try again in an hour", // poruka ako se prijedje limit
 });
 
 //10-20 naoravim middleware koji koristi limiter funkciju
 // taj middleware se odnosi na sve requestove koji idu u poddomenu /api
-app.use('/api', limiter);
+app.use("/api", limiter);
 
 /********************************************/
 // body parser, reading data from the body into req.body
 app.use(
   express.json({
-    limit: '10kb' // limitiram body iz request da bude maximalno 10 kb velik
+    limit: "10kb", // limitiram body iz request da bude maximalno 10 kb velik
   })
 );
 /********************************************/
@@ -53,7 +53,7 @@ app.use(mongoSanitize());
 /********************************************/
 
 //10-22 data sanitization against XSS atatcks - cross site scripting
-// ukloni $bilo koji HTML kod iz korisnickog inputa
+// ukloni bilo koji HTML kod iz korisnickog inputa
 app.use(xss());
 /********************************************/
 
@@ -62,13 +62,13 @@ app.use(
   hpp({
     // niz dozvoljenih duplikata
     whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price'
-    ]
+      "duration",
+      "ratingsQuantity",
+      "ratingsAverage",
+      "maxGroupSize",
+      "difficulty",
+      "price",
+    ],
   })
 );
 /********************************************/
@@ -77,7 +77,7 @@ app.use(
 app.use(express.static(`${__dirname}/public`));
 /********************************************/
 
-//dodaje timestamp za svaki request - mozda mi ovo ne trba ?!?
+//dodaje timestamp za svaki request - ovo je samo testiranje middlewarea
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
@@ -86,12 +86,12 @@ app.use((req, res, next) => {
 
 // ROUTES
 // ovo se zove mounting the routers 6-16
-app.use('/api/v1/tours', tourRouter);
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/reviews', reviewRouter); //11-9
+app.use("/api/v1/tours", tourRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reviewRouter); //11-9
 
 //9-3 - u ovome trenutku sve rute su testirane i nema podudaranja, pa onda nastupa ovaj fallback
-app.all('*', (req, res, next) => {
+app.all("*", (req, res, next) => {
   //9-5  kreiram error, error handling middleware ce ga uhvatit
   // const err = new Error(`Can't find ${req.originalUrl} on this server`);
   // err.status = 'fail';

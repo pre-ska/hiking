@@ -341,5 +341,60 @@
       ako nemam <b>tourId</b> onda je find() filter prazan objekt i dobijem sve
       reviewse od svih tura
     </li>
+    <h2>
+      handler factory function: delete 11-15 - globalna DELETE funkcija za
+      reviews i sve ostale kolekcije
+    </h2>
+    <i
+      >stvara se puno duplog koda jer metode su jako slicne, pa cu napraviti
+      <b>factory functions</b> za delete, crete, update itd</i
+    >
+    <li>kreiram <b>handlerFactory.js</b> u <b>controllers</b> folderu</li>
+    <li>
+      napravim <b>deleteOne</b> funkciju koja ce globalno brisati jedan dokument
+      iz bilo koje kolekcija
+    </li>
+    <li>
+      zato joj pustim <b>Model</b> kao argument, da mogu znat za koji model
+      radim taj delete
+    </li>
+    <li>
+      uvezem <b>handerFactory.js</b> kao <b>factory</b> u
+      <b>tourController.js</b>
+    </li>
+    <li>
+      zamjenim postojecu <b>deleteTour</b> funkciju sa onom generickom iz
+      <i>handlerFactory</i> koja se zove <b>deleteOne</b>
+    </li>
+    <li>
+      znaci sad umjesto koda <i>deleteTour</i> funkcije imam samo
+      <b>factory.deleteOne(Tour)</b>
+    </li>
+    <li>
+      istu stvar trebam napraviti i za <b>deleteReview</b> u
+      <b>reviewControlleru</b> ali za to jos nisam napravio rutu sa delete
+      metodom
+    </li>
+    <h3>reviewRoutes.js</h3>
+    <li>
+      napravim rutu za delete review... mora imati autorizaciju, zatim
+      autorizacija moze biti samo za admina i tek onda ide deleteReview u
+      middleware piplejanu....autorizaciju cu kasnije impementirat
+    </li>
+    <i>istu stvar trebam napraviti i za brisanje korisnika</i><br />
+    <li>
+      u ovom slucaju samo admin moze kompletno izbrisati korisnika, dok sam
+      korisnik moze deaktivirati svoj racun
+    </li>
+    <h3>userRoutes.js</h3>
+    <li>tu vec imam rutu za DELETE http metodu na <b>/:id</b> ruti</li>
+    <h3>userController.js</h3>
+    <li>
+      napravim istu stvar kao i prije... u <b>deleteUser</b> metodu stavim
+      <b>factory.deleteOne(User)</b>
+    </li>
+    <li>kasnije cu dodati da samo admin moze delete na ovoj ruti</li>
+    <h2>factory functions: create & update 11-16</h2>
+    <i>istu logiku cu primjeniti i ovdje</i>
   </body>
 </html>
