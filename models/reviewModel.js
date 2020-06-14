@@ -1,5 +1,6 @@
 //11-8
 const mongoose = require("mongoose");
+const Tour = require("./tourModel");
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -58,6 +59,62 @@ reviewSchema.pre(/^find/, async function (next) {
   });
 
   next();
+});
+
+//11-22 statička metoda
+reviewSchema.statics.calcAverageRatings = async function (tourId) {
+  //u static method THIS se odnosi na model
+  const stats = await this.aggregate([
+    {
+      $match: { tour: tourId },
+    },
+    {
+      $group: {
+        _id: "$tour",
+        nRating: { $sum: 1 },
+        avgRating: { $avg: "$rating" },
+      },
+    },
+  ]);
+
+  // console.log(stats);
+
+  if (stats.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: stats[0].nRating,
+      ratingsAverage: stats[0].avgRating,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: 0,
+      ratingsAverage: 4.5,
+    });
+  }
+};
+
+//11-22 mogu koristiti post jer nakon sejvanja lako izračunam prosjek
+reviewSchema.post("save", function () {
+  // prvi THIS se odnosi na model
+  // drugi THIS se odnosi na trenutni review dokument
+
+  // ovo je statična metoda i moram je pozvati na modelu ali u ovo trnutku model još nije kreiran
+  // zato ovo ide na istancu
+  this.constructor.calcAverageRatings(this.tour);
+});
+
+//11-23 za "save" review mogu lako izracunati rating nakon što je dodan pomocu POST MIDDLEWARE
+//ali za delete i update review nemogu jer  query je vec izvrsen...neznam za koju turu je updejtan review pa moram prvo sa PRE
+// u pre nemogu izracunati jer imam prethodno stanje a ne novo koje ce tek nastupiti
+reviewSchema.pre(/^findOneAnd/, async function (next) {
+  //THIS je trenutni querry
+  this.r = await this.findOne();
+  next();
+});
+
+//11-23 nastavak prethodnog PRE... trebao mi je tour ID kojeg ovdje ne mogu dobiti, query je izvršen već...mogu ga dobit isamo u query middewareu a to je PRE
+//iz PRE middlewarea prenesem u POST middleware tourID i onda izračunam (stavio sam ga na this.r)
+reviewSchema.post(/^findOneAnd/, async function () {
+  await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
 /******************************************** */
