@@ -49,6 +49,9 @@ router
 router
   .route("/tours-within/:distance/center/:latlng/unit/:unit")
   .get(tourController.getToursWithin);
+
+//11-26
+router.route("/distances/:latlng/unit/:unit").get(tourController.getDistances);
 ////////////////
 
 router

@@ -202,17 +202,17 @@ tourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
-//************ AGGREGATION MIDDLEWARE 8-26
-tourSchema.pre("aggregate", function (next) {
-  // THIS se odnosi na trenutni aggregation object
-  console.log(this.pipeline());
+// //************ AGGREGATION MIDDLEWARE 8-26
+// tourSchema.pre("aggregate", function (next) {
+//   // THIS se odnosi na trenutni aggregation object
+//   console.log(this.pipeline());
 
-  // izbaci seacretTour iz aggregationa, tako da u pipline dodaš novi match filter
-  // pipleine je array, novi filter ubaci na prvo mjesto
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } }); //ovo je NOT EQUAL = true ... seacretTour: false isto prolazi
+//   // izbaci seacretTour iz aggregationa, tako da u pipline dodaš novi match filter
+//   // pipleine je array, novi filter ubaci na prvo mjesto
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } }); //ovo je NOT EQUAL = true ... seacretTour: false isto prolazi
 
-  next();
-});
+//   next();
+// });
 
 /******************************************** */
 const Tour = mongoose.model("Tour", tourSchema);
