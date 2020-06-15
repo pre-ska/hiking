@@ -6,7 +6,7 @@ const factory = require("./handlerFactory");
 // nemoj ovako radit
 const catchAsync = require("../utils/catchAsync"); //9-7
 
-// const AppError = require("../utils/appError");
+const AppError = require("../utils/appError");
 
 // const tours = JSON.parse(
 //   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
@@ -379,4 +379,36 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   //     message: error
   //   });
   // }
+});
+
+//geospatial - da bi koristio feture iz MongoDb-a startLocation mora biti indexiran (tourModel.js)
+//11-25 /tours-within/233/center/34.111745,-118.113491/unit/ml
+exports.getToursWithin = catchAsync(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(",");
+
+  //radius mora biti u radijanima - distance podjeljeno sa radiujusom zemlje
+  const radius = unit === "mi" ? distance / 3963.2 : distance / 6378.1;
+
+  if (!lat || !lng) {
+    next(
+      new AppError(
+        "Please provide latitude and longitude in the format lat, lng",
+        400
+      )
+    );
+  }
+
+  //finds documents inside certain geonetry - readius of disctance, center = center
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
+
+  res.status(200).json({
+    status: "success",
+    results: tours.length,
+    data: {
+      data: tours,
+    },
+  });
 });

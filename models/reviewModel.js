@@ -38,6 +38,10 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+//11-24 prevent duplicate review - same tour, same user
+//kombinacija ture i korisnika mora bit unique!!!!
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 //11-10 query-pre-hook koji popuni "tour" i "user" sa dokumentima umjesto IDja...
 // ovaj hook vrijedi za sve REVIEWS quierije koji pocinju sa "find"
 reviewSchema.pre(/^find/, async function (next) {

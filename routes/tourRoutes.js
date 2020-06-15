@@ -45,6 +45,12 @@ router
     tourController.getMonthlyPlan
   ); //11-19 protected, restric>To
 
+//11-25
+router
+  .route("/tours-within/:distance/center/:latlng/unit/:unit")
+  .get(tourController.getToursWithin);
+////////////////
+
 router
   .route("/")
   .get(tourController.getAllTours) //10-8 dodao, 11-19 maknio authController.protected
