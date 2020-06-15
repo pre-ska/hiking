@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit"); //10-20
@@ -14,8 +15,13 @@ const reviewRouter = require("./routes/reviewRoutes");
 
 const app = express();
 
-//////////////////    GLOBAL MIDDLEWARES ////////////////////////////////////////////////////////
+//12-03
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 
+//////////////////    GLOBAL MIDDLEWARES ////////////////////////////////////////////////////////
+// serving static files...koristeći middleware
+app.use(express.static(path.join(__dirname, "/public")));
 //development log
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -73,8 +79,6 @@ app.use(
 );
 /********************************************/
 
-// serving static files...koristeći middleware
-app.use(express.static(`${__dirname}/public`));
 /********************************************/
 
 //dodaje timestamp za svaki request - ovo je samo testiranje middlewarea
@@ -82,8 +86,13 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
-/********************************************/
 
+//12-03 render template
+app.get("/", (req, res) => {
+  res.status(200).render("base");
+});
+
+/********************************************/
 // ROUTES
 // ovo se zove mounting the routers 6-16
 app.use("/api/v1/tours", tourRouter);
