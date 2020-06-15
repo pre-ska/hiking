@@ -2,7 +2,7 @@
 doctype
 html(lang='en')
   head
-    title Hiking | Exciting tours for adventurous people
+    title Hiking | #{title }
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet' href='css/style.css')
@@ -14,8 +14,8 @@ html(lang='en')
     include _header
 
     // CONTENT
-    main.main
-      h1= tour
+    block content
+      h1 This is a placeholder heading
 
 
     //FOOTER
