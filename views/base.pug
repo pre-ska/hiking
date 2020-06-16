@@ -2,12 +2,14 @@
 doctype
 html(lang='en')
   head
-    title Hiking | #{title }
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet' href='/css/style.css')
-    link(rel='shortcut icon' type='image/png' href='img/favicon.png')
-    link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700' rel='stylesheet')
+    //- 12-13
+    block head
+      title Hiking | #{title }
+      meta(charset='utf-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      link(rel='stylesheet' href='/css/style.css')
+      link(rel='shortcut icon' type='image/png' href='img/favicon.png')
+      link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700' rel='stylesheet')
 
   body
     // HEADER
@@ -20,3 +22,5 @@ html(lang='en')
 
     //FOOTER
     include _footer
+
+  script(src='/js/mapBox.js')
