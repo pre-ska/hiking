@@ -15,7 +15,8 @@ const router = express.Router();
 
 //12-7
 router.get("/", viewsController.getOverview);
-//12-7
-router.get("/tour", viewsController.getTour);
+
+//12-11
+router.get("/tour/:slug", viewsController.getTour);
 
 module.exports = router;
