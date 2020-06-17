@@ -109,6 +109,16 @@ exports.login = catchAsync(async (req, res, next) => {
   // });
 });
 
+//12-19
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({ status: "success" });
+};
+
 //10-8 10-9 za svaku zasticenu rutu
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) provjeri dali ima token u requestu
@@ -164,39 +174,48 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 //12-17 kopija protected (prethodnog) ovo je middleware za svaku rutu da provjeri dali je korisnik logiran ili ne
 //ovo mi treba za rendering npr. navbara (user img, da sakrijem buttone za login, signup...)
-exports.isLoggedIn = catchAsync(async (req, res, next) => {
+exports.isLoggedIn = async (req, res, next) => {
+  // u 12-19 maknio catchAsync i ubacio try/catch -
+  //zato što logout metoda koja kreira bezvezni jwt token
+  //izaziva globalnu grešku ovdje....
+  //zato radim samo lokalni try/catch a ako je error -
+  //puštam dalje jer user u biti nije logiran, i to je OK
   if (req.cookies.jwt) {
-    //verify tokem from req.cookies
-    const decoded = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRET
-    );
+    try {
+      //verify tokem from req.cookies
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
 
-    // dohvati korisnika iz baze po IDju
-    const currentUser = await User.findById(decoded.id);
+      // dohvati korisnika iz baze po IDju
+      const currentUser = await User.findById(decoded.id);
 
-    if (!currentUser) {
-      // ako nema tog korsinika, prekini i  nastavi sa next() middleware tj. korisnik nije logiran
-      // ovo je samo za rendering na frontendu - OVO NIJE SIGURNOSNI MEHANIZAM
+      if (!currentUser) {
+        // ako nema tog korsinika, prekini i  nastavi sa next() middleware tj. korisnik nije logiran
+        // ovo je samo za rendering na frontendu - OVO NIJE SIGURNOSNI MEHANIZAM
+        return next();
+      }
+
+      // 4) provjeri dali je korisnik promjenio password NAKON sto je JWT  token izdan
+      // iat = "issued at"... to je u decoded objektu
+      // changePasswordAfter je statc instance method u modelu...userModel.js
+      if (currentUser.changePasswordAfter(decoded.iat)) {
+        return next();
+      }
+
+      //ako je dovde dosao...sve je proslo ok - USER JE LOGIRAN
+      // moram dodati usera da bude dostupan za TEMPLATE - view engine
+      // dodajem usera na response objekt, i template ce ga onda viditi kao varijablu "user"
+      //svaki template ima pristup RES.LOCALS
+      res.locals.user = currentUser;
+      return next();
+    } catch (error) {
       return next();
     }
-
-    // 4) provjeri dali je korisnik promjenio password NAKON sto je JWT  token izdan
-    // iat = "issued at"... to je u decoded objektu
-    // changePasswordAfter je statc instance method u modelu...userModel.js
-    if (currentUser.changePasswordAfter(decoded.iat)) {
-      return next();
-    }
-
-    //ako je dovde dosao...sve je proslo ok - USER JE LOGIRAN
-    // moram dodati usera da bude dostupan za TEMPLATE - view engine
-    // dodajem usera na response objekt, i template ce ga onda viditi kao varijablu "user"
-    //svaki template ima pristup RES.LOCALS
-    res.locals.user = currentUser;
-    return next();
   }
   next();
-});
+};
 
 //10-11...moram wrapati middleware u novu funkciju da primi argumente
 // korsitim rest parametars syntax da primi sve argumente koliko ih god ima npr. ['admin','lead-guide']

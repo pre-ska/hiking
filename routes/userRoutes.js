@@ -10,6 +10,9 @@ router.post("/signup", authController.signup);
 //10-7
 router.post("/login", authController.login);
 
+//12-19
+router.get("/logout", authController.logout);
+
 //10-12
 router.post("/forgotPassword", authController.forgotPassword);
 
