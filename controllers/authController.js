@@ -347,7 +347,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 //10-15 ako logiran korisnik hoce promjeniti password..
 exports.updatePassword = catchAsync(async (req, res, next) => {
   //za provjeru mora unijeti trenutni password
-
+  console.log("update password 1", req.user.id);
   // 1) dohvati korsinika iz kolekcije
   // ovo radi logiran korsinik, a pomocu protected middlewarea vec imam user objekt u requestu
   // moram explicitno navesti polje password da mi vrati, jer incae password se ne salje u dokumentu koji se dohvati iz DB
@@ -355,7 +355,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   if (!user) {
     return next(new AppError("There is no user with that email address", 404));
   }
-
+  console.log("update password 2", req.user.name);
   // 2) provjeri dali je POSTani password tocan sa instance metodom correctPassword()
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError("Your current password is incorrect", 401));
