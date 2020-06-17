@@ -20,7 +20,7 @@ const signToken = (id) => {
 // ovdje kreiram token i saljem ga sa user dokumentom prema klijentu
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-
+  // console.log('token=',token);
   /******************************************* */
   //10-19
   const cookieOptions = {
@@ -34,6 +34,7 @@ const createSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
 
   res.cookie("jwt", token, cookieOptions);
+  // console.log("poslo cookie");
 
   // da mi ne salje password prema klijentu, novo kreiran dokument sadrzi password iako sam stavio select: false u modelu...to je samo za save valid
   user.password = undefined;
@@ -169,6 +170,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   //ako je dovde dosao...sve je proslo ok GRANT ACCESS TO PROTECTED ROUTE
   // dodajem usera na req jer ce mi kasnije koristiti u .restrictTo() middlewareu
   req.user = currentUser;
+  res.locals.user = currentUser;
   next();
 });
 

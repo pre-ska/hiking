@@ -55,6 +55,9 @@ app.use(
 );
 /********************************************/
 
+//12-22 parser za npr. url encoded form - kada radim diretno post iz forme
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
 //12-16 parser koji čita data iz cookie-ja
 app.use(cookieParser());
 
@@ -89,7 +92,7 @@ app.use(
 //dodaje timestamp za svaki request - ovo je samo testiranje middlewarea
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.cookies); //12-16
+  console.log("cookies app.js", req.cookies); //12-16
   next();
 });
 

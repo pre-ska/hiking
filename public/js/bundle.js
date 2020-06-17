@@ -8451,7 +8451,7 @@ var login = /*#__PURE__*/function () {
 
           case 3:
             res = _context.sent;
-            console.log(res.data);
+            console.log("login.js #1", res.data);
 
             if (res.data.status === "success") {
               (0, _alert.showAlert)("success", "Logged in successfully");
@@ -8788,7 +8788,7 @@ var _login = require("./login");
 
 //get elements
 var mapBox = document.getElementById("map");
-var loginForm = document.getElementsByClassName("form")[0];
+var loginForm = document.getElementsByClassName("form--login")[0];
 var logoutButton = document.getElementsByClassName("nav__el--logout")[0]; //delegation
 
 if (mapBox) {
@@ -8834,7 +8834,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "1386" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5870" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
