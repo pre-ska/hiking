@@ -1,18 +1,18 @@
-const { promisify } = require('util'); //10-9
-const bcrypt = require('bcryptjs'); //10-15 ovo prima SAMO STRINGOVE
-const crypto = require('crypto'); //10-14
+const { promisify } = require("util"); //10-9
+const bcrypt = require("bcryptjs"); //10-15 ovo prima SAMO STRINGOVE
+const crypto = require("crypto"); //10-14
 
 //10-3
-const User = require('../models/userModel');
-const catchAsync = require('../utils/catchAsync');
-const jwt = require('jsonwebtoken'); //10-6
-const AppError = require('../utils/appError'); //10-7
-const sendEmail = require('../utils/email'); //10-13
+const User = require("../models/userModel");
+const catchAsync = require("../utils/catchAsync");
+const jwt = require("jsonwebtoken"); //10-6
+const AppError = require("../utils/appError"); //10-7
+const sendEmail = require("../utils/email"); //10-13
 
 //10-7
-const signToken = id => {
+const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
@@ -28,23 +28,23 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     // secure: true, // https - ovaj dio treba biti aktivan sam u produkciji
-    httpOnly: true //ovo kazecookie ne moze biti modificarn od strane browsera
+    httpOnly: true, //ovo kazecookie ne moze biti modificarn od strane browsera
   };
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
+  if (process.env.NODE_ENV === "production") cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie("jwt", token, cookieOptions);
 
   // da mi ne salje password prema klijentu, novo kreiran dokument sadrzi password iako sam stavio select: false u modelu...to je samo za save valid
   user.password = undefined;
 
   /******************************************* */
   res.status(statusCode).json({
-    status: 'success',
+    status: "success",
     token,
     data: {
-      user
-    }
+      user,
+    },
   });
 };
 
@@ -79,13 +79,13 @@ exports.login = catchAsync(async (req, res, next) => {
 
   //check if email and passwords exist
   if (!email || !password) {
-    return next(new AppError('Please provide email and password!', 400));
+    return next(new AppError("Please provide email and password!", 400));
   }
 
   // check if user exists && password is correct
   // select metoda doda jos i password u rezultat, jer originalno password nece doci... jer mu je select prop na false
   // ovdje moram imati i email i password...password dodje hashiran, kao sto je u DB
-  const user = await User.findOne({ email: email }).select('+password');
+  const user = await User.findOne({ email: email }).select("+password");
 
   //svaki dokument (user) dobiven modelom (User) ima na sebi metodu koju sam mu napraviou u userModel.js --> correctPassword()
   // const correct = await user.correctPassword(password, user.password); PREBACIO DIREKTNO U IF STATEMENT JER PRETHODNA LINIJA MOZDA NECE VRATITI DOKUMENT...pa ce mi user.password biti undefined
@@ -94,7 +94,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // u modelu sam napravio metodu iz bcrypta koja ce ih automatski usporediti i vratit TRUE ili FALSE
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Incorrect email or password', 401)); // ako nema dokumenta (user) ili ako se passwordi ne podudaraju (correctPassword) -> throw error
+    return next(new AppError("Incorrect email or password", 401)); // ako nema dokumenta (user) ili ako se passwordi ne podudaraju (correctPassword) -> throw error
   }
 
   //ako je sve dovde proslo, posalji token klijentu/useru
@@ -115,14 +115,17 @@ exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.headers.authorization.split(' ')[1];
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies.jwt) {
+    //12-16 ako nema u headeru, provjeri dali postoji cookie sa jwt
+    token = req.cookies.jwt;
   }
 
   if (!token) {
     return next(
-      new AppError('You are not logged in! Please log in to get access', 401)
+      new AppError("You are not logged in! Please log in to get access", 401)
     ); // 401 - unauthorized
   }
 
@@ -138,7 +141,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (!currentUser) {
     return next(
       new AppError(
-        'The user belonging to this token does not exists anymore',
+        "The user belonging to this token does not exists anymore",
         401
       )
     );
@@ -149,13 +152,49 @@ exports.protect = catchAsync(async (req, res, next) => {
   // changePasswordAfter je statc instance method u modelu...userModel.js
   if (currentUser.changePasswordAfter(decoded.iat)) {
     return next(
-      new AppError('User recently changed Password! Please log in again', 401)
+      new AppError("User recently changed Password! Please log in again", 401)
     );
   }
 
   //ako je dovde dosao...sve je proslo ok GRANT ACCESS TO PROTECTED ROUTE
   // dodajem usera na req jer ce mi kasnije koristiti u .restrictTo() middlewareu
   req.user = currentUser;
+  next();
+});
+
+//12-17 kopija protected (prethodnog) ovo je middleware za svaku rutu da provjeri dali je korisnik logiran ili ne
+//ovo mi treba za rendering npr. navbara (user img, da sakrijem buttone za login, signup...)
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    //verify tokem from req.cookies
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // dohvati korisnika iz baze po IDju
+    const currentUser = await User.findById(decoded.id);
+
+    if (!currentUser) {
+      // ako nema tog korsinika, prekini i  nastavi sa next() middleware tj. korisnik nije logiran
+      // ovo je samo za rendering na frontendu - OVO NIJE SIGURNOSNI MEHANIZAM
+      return next();
+    }
+
+    // 4) provjeri dali je korisnik promjenio password NAKON sto je JWT  token izdan
+    // iat = "issued at"... to je u decoded objektu
+    // changePasswordAfter je statc instance method u modelu...userModel.js
+    if (currentUser.changePasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    //ako je dovde dosao...sve je proslo ok - USER JE LOGIRAN
+    // moram dodati usera da bude dostupan za TEMPLATE - view engine
+    // dodajem usera na response objekt, i template ce ga onda viditi kao varijablu "user"
+    //svaki template ima pristup RES.LOCALS
+    res.locals.user = currentUser;
+    return next();
+  }
   next();
 });
 
@@ -168,10 +207,10 @@ exports.restrictTo = (...roles) => {
     //taj .protect() middleware uvijek ide prije .restrictTo()...zato imam u njemu role property
     //------------------------------------------------
     //ako role iz korsinickog objekta nije sadrzana u argumentima...odbacim zahtjev
-    console.log(req.user);
+    // console.log(req.user);
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError('You do not have permission to perform this action', 403)
+        new AppError("You do not have permission to perform this action", 403)
       ); // 403- forbidden
     }
 
@@ -185,7 +224,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) dohvatim usera na osnovu emaila koji je dao u formi za reset password
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    return next(new AppError('There is no user with that email address', 404));
+    return next(new AppError("There is no user with that email address", 404));
   }
 
   // 2) generiram random token - za to cu korisititi staticku instance mtodu...jer su tokeni strikno vezani ka user podatke
@@ -200,7 +239,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3)10-13 posaljem token na tu email adresu
   const resetURL = `${req.protocol}://${req.get(
-    'host'
+    "host"
   )}/api/v1/users/resetPassword/${resetToken}`;
 
   const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}\nIf you didn't forget your password, please ignor this email`;
@@ -211,15 +250,15 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
-      subject: 'Your password reset token (valid for 10 min)',
-      message
+      subject: "Your password reset token (valid for 10 min)",
+      message,
     });
 
     // 10-13 ovo  saljem na frontend kao obajvest da je poslan email na korisnicku email adresu
     // ovdje ne saljem token !!!!!!!!...token mora ici na email
     res.status(200).json({
-      status: 'success',
-      message: 'token send to email'
+      status: "success",
+      message: "token send to email",
     });
   } catch (error) {
     //u slucaju greske ovdje moram ponistit token koji sam izdao
@@ -229,7 +268,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     return next(
-      new AppError('there was an error sending the email.Try again later', 500)
+      new AppError("there was an error sending the email.Try again later", 500)
     );
   }
 });
@@ -239,19 +278,19 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 1) dohvati korisnika s obzirom na token
   // prvo hashiram token koji stigne u requestu kao param (:token) i onda trazim korisnika u DB po tom hashiranom tokenu
   const hashedToken = crypto
-    .createHash('sha256')
+    .createHash("sha256")
     .update(req.params.token)
-    .digest('hex');
+    .digest("hex");
 
   // osim po tokenu, odma usporedim i dali je token istekao tj. dali je spremljeni Expires veci od trenutnog vremena... jos uvijek vazi
   const user = await User.findOne({
     passwordResetToken: hashedToken,
-    passwordResetExpires: { $gt: Date.now() }
+    passwordResetExpires: { $gt: Date.now() },
   });
 
   // 2) ako postoji taj korisnik i token NIJE istekao
   if (!user) {
-    return next(new AppError('Token is invalid or expired.', 400)); //400 bad request
+    return next(new AppError("Token is invalid or expired.", 400)); //400 bad request
   }
 
   //ako prodje dovde,
@@ -291,14 +330,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) dohvati korsinika iz kolekcije
   // ovo radi logiran korsinik, a pomocu protected middlewarea vec imam user objekt u requestu
   // moram explicitno navesti polje password da mi vrati, jer incae password se ne salje u dokumentu koji se dohvati iz DB
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user.id).select("+password");
   if (!user) {
-    return next(new AppError('There is no user with that email address', 404));
+    return next(new AppError("There is no user with that email address", 404));
   }
 
   // 2) provjeri dali je POSTani password tocan sa instance metodom correctPassword()
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-    return next(new AppError('Your current password is incorrect', 401));
+    return next(new AppError("Your current password is incorrect", 401));
   }
 
   // 3) update the password - ako prodje dovde

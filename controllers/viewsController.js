@@ -6,7 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 exports.getOverview = catchAsync(async (req, res, next) => {
   // get all the tour data from collection
   const tours = await Tour.find();
-  console.log(tours[0].guides);
+  // console.log(tours[0].guides);
   res.status(200).render("overview", {
     title: "All tours",
     tours,
@@ -27,3 +27,10 @@ exports.getTour = catchAsync(async (req, res, next) => {
     tour,
   });
 });
+
+//12-15
+exports.getLoginForm = (req, res, next) => {
+  res.status(200).render("login", {
+    title: `Log into your account`,
+  });
+};

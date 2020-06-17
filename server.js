@@ -1,20 +1,20 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 // 9-14 hvatanje uncaught exception - globalno u cijeloj aplikaciji
-process.on('uncaughtException', err => {
-  console.log('uncaught exception!... shutting down');
+process.on("uncaughtException", (err) => {
+  console.log("uncaught exception!... shutting down");
   console.log(err.name, err.message);
   process.exit(1); //0-success, 1- unhandledRejection
 });
 
 // mora biti prije app-a
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: "./config.env" });
 
-const app = require('./app');
+const app = require("./app");
 
 const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
+  "<PASSWORD>",
   process.env.DATABASE_PASSWORD
 );
 
@@ -23,10 +23,10 @@ mongoose
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
   .then(() => {
-    console.log('connected to database');
+    console.log("connected to database");
   });
 
 // start server
@@ -36,8 +36,8 @@ const server = app.listen(port, () => {
 });
 
 // 9-13 hvatanje unhandled promise rejection - globalno u cijeloj aplikaciji
-process.on('unhandledRejection', err => {
-  console.log('UNHANDLED REJECTION!... shutting down');
+process.on("unhandledRejection", (err) => {
+  console.log("UNHANDLED REJECTION!... shutting down");
   console.log(err.name, err.message);
   server.close(() => {
     process.exit(1); //0-success, 1- unhandledRejection

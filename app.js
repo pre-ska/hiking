@@ -6,6 +6,7 @@ const helmet = require("helmet"); //10-21
 const mongoSanitize = require("express-mongo-sanitize"); //10-22
 const xss = require("xss-clean"); //10-22
 const hpp = require("hpp"); //10-23
+const cookieParser = require("cookie-parser"); //12-16
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController"); //10-20
@@ -54,6 +55,9 @@ app.use(
 );
 /********************************************/
 
+//12-16 parser koji čita data iz cookie-ja
+app.use(cookieParser());
+
 //10-22 data sanitization against NoSQL query injections
 // ukloni $ i (.) iz requestova i parametar , tako da mongoDb operatori ne mogu raditi
 app.use(mongoSanitize());
@@ -85,6 +89,7 @@ app.use(
 //dodaje timestamp za svaki request - ovo je samo testiranje middlewarea
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  console.log(req.cookies); //12-16
   next();
 });
 
