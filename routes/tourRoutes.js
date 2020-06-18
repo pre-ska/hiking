@@ -70,8 +70,10 @@ router
   .patch(
     authController.protect,
     authController.restrictTo("admin", "lead-guide"),
+    tourController.uploadTourImages,
+    tourController.resizeTourImages,
     tourController.updateTour
-  ) //11-19 protected,restrictTo
+  ) //11-19 protected,restrictTo, 13-7 uploadTourImages, resizeTourImages
   .delete(
     authController.restrictTo("admin", "lead-guide"),
     tourController.deleteTour

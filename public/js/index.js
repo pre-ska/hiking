@@ -33,9 +33,16 @@ if (logoutButton) logoutButton.addEventListener("click", logout);
 if (userDataForm) {
   userDataForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value;
-    const name = document.getElementById("name").value;
-    updateSettings({ name, email }, "data");
+    //13-6 refactoring da podržava img upload preko form data
+    const form = new FormData(); //13-6
+    form.append("name", document.getElementById("name").value);
+    form.append("email", document.getElementById("email").value);
+    form.append("photo", document.getElementById("photo").files[0]);
+
+    // const email = document.getElementById("email").value;
+    // const name = document.getElementById("name").value;
+    // updateSettings({email, name}, "data");
+    updateSettings(form, "data");
   });
 }
 

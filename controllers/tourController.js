@@ -1,3 +1,5 @@
+const multer = require("multer"); //13-7
+const sharp = require("sharp"); //13-7
 const Tour = require("../models/tourModel"); // 8-7
 // const APIFeatures = require("../utils/apiFeatures"); //8-20
 const factory = require("./handlerFactory");
@@ -41,6 +43,75 @@ const AppError = require("../utils/appError");
 
 // route handlers - controllers
 // https://mongoosejs.com/docs/queries.html
+
+/********* IMAGE UPLOAD 13-7 *******************/
+
+const multerStorage = multer.memoryStorage();
+
+//testiram vrstu filea...samo slike prolaze
+const multerFilter = (req, file, callback) => {
+  if (file.mimetype.startsWith("image")) {
+    callback(null, true);
+  } else {
+    callback(
+      new AppError("Not an image. Please upload only images", 400),
+      false
+    );
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadTourImages = upload.fields([
+  { name: "imageCover", maxCount: 1 },
+  { name: "images", maxCount: 3 },
+]);
+
+/*primjer:
+upload.single('image') req.file //za upload jedne slike
+upload.array('images', 5) req.files  // za upload više slika i to točno 5
+upload.fields(....) req.files  //kad imam mix slika različitih kriterija
+*/
+
+exports.resizeTourImages = catchAsync(async (req, res, next) => {
+  console.log(req.files);
+
+  if (!req.files.imageCover || !req.files.images) return next();
+
+  // 1- process cover image
+  // kreiram i stavim ime slike na req.body tako da factory function updateOne() pokupi sve sa body-a
+  // koristim to i u sharp metodi
+  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
+
+  await sharp(req.files.imageCover[0].buffer)
+    .resize(1500, 1000)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/tours/${req.body.imageCover}`);
+
+  // 2 -process other images in loop
+  req.body.images = [];
+
+  await Promise.all(
+    req.files.images.map(async (file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+
+      await sharp(file.buffer)
+        .resize(1500, 1000)
+        .toFormat("jpeg")
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/tours/${filename}`);
+
+      req.body.images.push(filename);
+    })
+  );
+
+  next();
+});
+/************************************************************/
 
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = "5";
