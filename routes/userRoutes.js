@@ -1,6 +1,10 @@
 const express = require("express");
+// const multer = require("multer"); //13-2
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
+
+// //13-2 ...13-3 prmejestio u userController
+// const upload = multer({ dest: "public/img/users" });
 
 const router = express.Router();
 
@@ -19,7 +23,7 @@ router.post("/forgotPassword", authController.forgotPassword);
 //10-13
 router.patch("/resetPassword/:token", authController.resetPassword);
 
-//11-19 sve rute koje dolaze nakon će biti testirnae sa protect
+//11-19 sve rute koje dolaze nakon će biti testirnne sa protect
 router.use(authController.protect);
 
 //10-15 - mijenjam user document - zato patch
@@ -41,6 +45,8 @@ router.get(
 router.patch(
   "/updateMe",
   //  authController.protect,
+  userController.uploadUserPhoto, //13-3
+  userController.resizeUserPhoto, //13-5
   userController.updateMe
 );
 

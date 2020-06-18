@@ -92,7 +92,7 @@ app.use(
 //dodaje timestamp za svaki request - ovo je samo testiranje middlewarea
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log("cookies app.js", req.cookies); //12-16
+  // console.log("cookies app.js", req.cookies); //12-16
   next();
 });
 

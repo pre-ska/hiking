@@ -22,7 +22,10 @@ const userSchema = new mongoose.Schema({
     trim: true,
     validate: [validator.isEmail, "Pleas provide valid email"],
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: "default.jpg",
+  },
   role: {
     // 10-11 implemntiram user roles za admine
     type: String,
