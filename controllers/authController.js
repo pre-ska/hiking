@@ -7,7 +7,7 @@ const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken"); //10-6
 const AppError = require("../utils/appError"); //10-7
-const sendEmail = require("../utils/email"); //10-13
+const Email = require("../utils/email"); //10-13 .. u13-10 refactoring
 
 //10-7
 const signToken = (id) => {
@@ -52,6 +52,14 @@ const createSendToken = (user, statusCode, res) => {
 //10-6
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body); // ovo nije sigurno, jer se svako moze registrirati kao admin
+
+  /** 13-10 */
+  const url = `${req.protocol}://${req.get("host")}/me`;
+  console.log("authController signup - email welcome url", url);
+  await new Email(newUser, url).sendWelcome();
+
+  /** */
+
   // const newUser = await User.create({
   //   // fragmentiram polja tako da je svako polje striktno defirnirano
   //   name: req.body.name,
@@ -269,11 +277,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // ovdje se moze dogoditi greska...da mail nije poslan...i nije dovoljno samo poslati response da nesto ne valja vec moram ponistiti izdanei token
   // zato koristim try/catch
   try {
-    await sendEmail({
-      email: user.email,
-      subject: "Your password reset token (valid for 10 min)",
-      message,
-    });
+    // await sendEmail({
+    //   email: user.email,
+    //   subject: "Your password reset token (valid for 10 min)",
+    //   message,
+    // });
 
     // 10-13 ovo  saljem na frontend kao obajvest da je poslan email na korisnicku email adresu
     // ovdje ne saljem token !!!!!!!!...token mora ici na email
