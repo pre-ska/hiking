@@ -53,12 +53,10 @@ const createSendToken = (user, statusCode, res) => {
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body); // ovo nije sigurno, jer se svako moze registrirati kao admin
 
-  /** 13-10 */
+  /** 13-10 ************************/
   const url = `${req.protocol}://${req.get("host")}/me`;
-  console.log("authController signup - email welcome url", url);
   await new Email(newUser, url).sendWelcome();
-
-  /** */
+  /*********************************/
 
   // const newUser = await User.create({
   //   // fragmentiram polja tako da je svako polje striktno defirnirano
@@ -266,22 +264,28 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   //   status: 'success'
   // });
 
-  // 3)10-13 posaljem token na tu email adresu
-  const resetURL = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/users/resetPassword/${resetToken}`;
-
-  const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}\nIf you didn't forget your password, please ignor this email`;
-
+  // 3)
   // 10-13 ovdje saljem email sa tokenom na adresu koja je u korisnickom dokumentu navedena prilikom registracije
   // ovdje se moze dogoditi greska...da mail nije poslan...i nije dovoljno samo poslati response da nesto ne valja vec moram ponistiti izdanei token
   // zato koristim try/catch
+  // zamjenio sa Emal klasom u 13-11
   try {
+    const resetURL = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/users/resetPassword/${resetToken}`;
+
+    //zamjenio sa donjim
+    // const message = `Forgot your password? Submit a PATCH request with your new password and confirm password to: ${resetURL}\nIf you didn't forget your password, please ignor this email`;
+
     // await sendEmail({
     //   email: user.email,
     //   subject: "Your password reset token (valid for 10 min)",
     //   message,
     // });
+
+    /**** 13-11  umjesto sendEmail za reet passwords gore *****/
+    await new Email(user, resetURL).sendPasswordReset();
+    /***********************************************************/
 
     // 10-13 ovo  saljem na frontend kao obajvest da je poslan email na korisnicku email adresu
     // ovdje ne saljem token !!!!!!!!...token mora ici na email
