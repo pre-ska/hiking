@@ -3,6 +3,7 @@ import "@babel/polyfill";
 import { displayMap } from "./mapBox";
 import { login, logout } from "./login";
 import { updateSettings } from "./updatedSettings";
+import { bookTour } from "./stripe"; //13-15
 
 //get elements
 const mapBox = document.getElementById("map");
@@ -12,6 +13,7 @@ const userDataForm = document.getElementsByClassName("form-user-data")[0]; //12-
 const userPasswordForm = document.getElementsByClassName(
   "form-user-password"
 )[0]; //12-23
+const bookBtn = document.getElementById("book-tour"); //13-15
 
 //delegation
 if (mapBox) {
@@ -68,5 +70,15 @@ if (userPasswordForm) {
     buttonSP.textContent = "Save password";
     // buttonSP.setAttribute("disabled", false);
     buttonSP.setAttribute("style", "background-color: none");
+  });
+}
+
+//13-15
+if (bookBtn) {
+  bookBtn.addEventListener("click", (e) => {
+    e.target.textContent = "Processing ...";
+    // izvuci tourId iz button dataseta ... svaki - u datasetu je konvertiran u camelcase
+    const { tourId } = e.target.dataset;
+    bookTour(tourId);
   });
 }
