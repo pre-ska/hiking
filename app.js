@@ -7,6 +7,7 @@ const mongoSanitize = require("express-mongo-sanitize"); //10-22
 const xss = require("xss-clean"); //10-22
 const hpp = require("hpp"); //10-23
 const cookieParser = require("cookie-parser"); //12-16
+const compression = require("compression"); //14-5
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController"); //10-20
@@ -86,8 +87,9 @@ app.use(
     ],
   })
 );
-/********************************************/
 
+/******  14-5 **************************************/
+app.use(compression());
 /********************************************/
 
 //dodaje timestamp za svaki request - ovo je samo testiranje middlewarea

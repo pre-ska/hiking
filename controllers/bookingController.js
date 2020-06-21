@@ -19,7 +19,7 @@ const AppError = require("../utils/appError");
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) get currently booked tour
   const tour = await Tour.findById(req.params.tourId);
-  console.log("tour price ", tour);
+  // console.log("tour price ", tour);
   // 2) create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
