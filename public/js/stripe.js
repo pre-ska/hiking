@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { ShowAlert } from "./alert";
+import { showAlert } from "./alert";
 var stripe = Stripe("pk_test_x9rPYMlgaj9DsNEzpFpbs9ES00uCUxhLoQ");
 
 //ovo pozivam iz index.js koji dohvati button i stavi listener na njega

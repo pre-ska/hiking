@@ -4,6 +4,7 @@ const Tour = require("../models/tourModel");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const Booking = require("../models/bookingModel");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   // get all the tour data from collection
@@ -47,6 +48,25 @@ exports.getAccount = (req, res) => {
     title: "Your account",
   });
 };
+
+//13-18
+exports.getMyTours = catchAsync(async (req, res, next) => {
+  //prije sam za ovakvu funkcionalnost koristio "virtuals"
+  //ovdje ću manualno napraviti na drugi način
+  // 1) find all bookings
+  const bookings = await Booking.find({ user: req.user.id });
+
+  // 2) find toursIDs with IDs from bookings
+  const tourIDs = bookings.map((el) => el.tour);
+  //- ovdje korsitim operator "in" jer tourIDs je array - bulk find
+  const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+  // - za render ne radim novi template već ću iskoristiti "overview"
+  res.status(200).render("overview", {
+    title: "My Tours",
+    tours,
+  });
+});
 
 //12-22
 exports.updateUserData = catchAsync(async (req, res, next) => {

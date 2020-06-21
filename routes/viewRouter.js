@@ -3,6 +3,7 @@
 const express = require("express");
 const viewsController = require("../controllers/viewsController");
 const authController = require("../controllers/authController");
+const bookingController = require("../controllers/bookingController");
 
 //kreiram router
 const router = express.Router();
@@ -21,7 +22,12 @@ const router = express.Router();
 // });
 
 //12-7
-router.get("/", authController.isLoggedIn, viewsController.getOverview);
+router.get(
+  "/",
+  bookingController.createBookingCheckout, // 13-17 privremeno riješenje za spremanje bookinga nakon transakcije
+  authController.isLoggedIn,
+  viewsController.getOverview
+);
 
 //12-11
 router.get("/tour/:slug", authController.isLoggedIn, viewsController.getTour);
@@ -31,6 +37,9 @@ router.get("/login", authController.isLoggedIn, viewsController.getLoginForm);
 
 //12-21
 router.get("/me", authController.protect, viewsController.getAccount);
+
+//13-18
+router.get("/my-tours", authController.protect, viewsController.getMyTours);
 
 //12-22
 router.post(

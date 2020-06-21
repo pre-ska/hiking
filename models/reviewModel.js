@@ -54,7 +54,7 @@ reviewSchema.pre(/^find/, async function (next) {
   //   select: 'name photo' // koja polja ZELIM SAMO da mi ubaci u embeded objekt, sa (-) MINUS mogu izbaciti koje ne zelim
   // });
 
-  // prije sam imao da mi polute radi i tour i user
+  // prije sam imao da mi populate radi i tour i user
   // maknio sam iz gornjeg koda da mi svaki review bude popunjen i sa turom...
   //lancanom reakcijom u svakom dohvacanju ture, dohvacam i review, pa onda opet za svaki review turu.... nepotrebno i zahtjevno
   this.populate({
