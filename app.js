@@ -19,6 +19,9 @@ const viewRouter = require("./routes/viewRouter");
 
 const app = express();
 
+//14-7 zbog herouku, heroku trži secure headere (authController.js line 32)
+app.enable("trust proxy");
+
 //12-03
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));

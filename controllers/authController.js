@@ -18,20 +18,23 @@ const signToken = (id) => {
 
 //10-15 kod koji se cesto ponavlja pa sam ga izvukao u zasebnu funkciju
 // ovdje kreiram token i saljem ga sa user dokumentom prema klijentu
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
   // console.log('token=',token);
-  /******************************************* */
+  /********************************************/
   //10-19
   const cookieOptions = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     // secure: true, // https - ovaj dio treba biti aktivan sam u produkciji
-    httpOnly: true, //ovo kazecookie ne moze biti modificarn od strane browsera
+    httpOnly: true, //ovo kaze cookie ne moze biti modificarn od strane browsera
+    secure: req.secure || req.headers("x-forwarded-proto") === "https", //14-7
   };
 
-  if (process.env.NODE_ENV === "production") cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
+  //14-7 prepravljeno
+  // if (process.env.NODE_ENV === "production") cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
+  // if (req.secure || req.headers('x-forwarded-proto') === 'https') cookieOptions.secure = true; //HTTPS  koristim samo u produkcijskoj verziji a ne u developmentu
 
   res.cookie("jwt", token, cookieOptions);
   // console.log("poslo cookie");
@@ -68,7 +71,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   // });
 
   //10-15 zamjena koda koji se ponavlja sa funkcijom
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
   // const token = signToken(newUser._id);
 
   // res.status(201).json({
@@ -107,7 +110,7 @@ exports.login = catchAsync(async (req, res, next) => {
   //ako je sve dovde proslo, posalji token klijentu/useru
 
   //10-15 zamjena koda koji se ponavlja sa funkcijom
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
   // const token = signToken(user._id);
 
   // res.status(200).json({
@@ -347,7 +350,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 4) logiraj korisnika - posljai JWT token korisniku
 
   //10-15 zamjena koda koji se ponavlja sa funkcijom
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
   // const token = signToken(user._id);
 
   // res.status(200).json({
@@ -384,7 +387,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 4) logiraj korisnika sa novim passwordom
 
   //10-15 zamjena koda koji se ponavlja sa funkcijom
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
   // const token = signToken(user._id);
 
   // res.status(200).json({
