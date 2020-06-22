@@ -2,6 +2,7 @@
 import "@babel/polyfill";
 import { displayMap } from "./mapBox";
 import { login, logout } from "./login";
+import { signup } from "./signup";
 import { updateSettings } from "./updatedSettings";
 import { bookTour } from "./stripe"; //13-15
 
@@ -14,6 +15,7 @@ const userPasswordForm = document.getElementsByClassName(
   "form-user-password"
 )[0]; //12-23
 const bookBtn = document.getElementById("book-tour"); //13-15
+const signupForm = document.getElementsByClassName("form--signup")[0];
 
 //delegation
 if (mapBox) {
@@ -80,5 +82,28 @@ if (bookBtn) {
     // izvuci tourId iz button dataseta ... svaki - u datasetu je konvertiran u camelcase
     const { tourId } = e.target.dataset;
     bookTour(tourId);
+  });
+}
+
+//ext
+if (signupForm) {
+  signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("passwordConfirm").value;
+
+    document.getElementById("signupBtn").style.display = "none";
+
+    const overlay = document.createElement("div");
+    overlay.className = "overlaySpin";
+    const spin = document.createElement("div");
+    spin.className = "loader";
+    overlay.appendChild(spin);
+    document.body.appendChild(overlay);
+
+    signup(name, email, password, passwordConfirm);
   });
 }

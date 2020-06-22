@@ -29,7 +29,7 @@ const createSendToken = (user, statusCode, req, res) => {
     ),
     // secure: true, // https - ovaj dio treba biti aktivan sam u produkciji
     httpOnly: true, //ovo kaze cookie ne moze biti modificarn od strane browsera
-    secure: req.secure || req.headers("x-forwarded-proto") === "https", //14-7
+    // secure: req.secure || req.headers("x-forwarded-proto") === "https", //14-7
   };
 
   //14-7 prepravljeno
@@ -125,7 +125,7 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
-
+  // res.redirect("/");
   res.status(200).json({ status: "success" });
 };
 

@@ -1245,7 +1245,8 @@ body {
   margin: 0 auto;
 }
 
-.login-form {
+.login-form,
+.signup-form {
   margin: 0 auto;
   max-width: 55rem;
   background-color: #fff;
@@ -1253,6 +1254,40 @@ body {
   box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
   padding: 5rem 7rem;
   border-radius: 5px;
+}
+
+.overlaySpin {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  background-color: azure;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .form__input {
