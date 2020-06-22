@@ -24,7 +24,7 @@ const router = express.Router();
 //12-7
 router.get(
   "/",
-  bookingController.createBookingCheckout, // 13-17 privremeno riješenje za spremanje bookinga nakon transakcije
+  // bookingController.createBookingCheckout, // 13-17 privremeno riješenje za spremanje bookinga nakon transakcije
   authController.isLoggedIn,
   viewsController.getOverview
 );
@@ -42,7 +42,12 @@ router.get("/signup", authController.isLoggedIn, viewsController.getSignupForm);
 router.get("/me", authController.protect, viewsController.getAccount);
 
 //13-18
-router.get("/my-tours", authController.protect, viewsController.getMyTours);
+router.get(
+  "/my-tours",
+  bookingController.createBookingCheckout,
+  authController.protect,
+  viewsController.getMyTours
+);
 
 //12-22
 router.post(

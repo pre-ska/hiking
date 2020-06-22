@@ -31,7 +31,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
   } catch (error) {
     const tg = document.getElementsByClassName("overlaySpin")[0];
     tg.parentNode.removeChild(tg);
-    document.getElementById("signupBtn").style.display = "none";
+    document.getElementById("signupBtn").style.display = "block";
     showAlert("error", error.response.data.message);
   }
 };

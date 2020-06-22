@@ -8595,7 +8595,7 @@ var signup = /*#__PURE__*/function () {
 
             _tg.parentNode.removeChild(_tg);
 
-            document.getElementById("signupBtn").style.display = "none";
+            document.getElementById("signupBtn").style.display = "block";
             (0, _alert.showAlert)("error", _context.t0.response.data.message);
 
           case 18:
