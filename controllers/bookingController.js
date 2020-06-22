@@ -78,14 +78,16 @@ const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
   const price = session.line_items[0].amount / 100;
-
+  console.log(tour, user, price);
   await Booking.create({ tour, user, price });
 };
 
 //14-10
 exports.webhookCheckout = (req, res, next) => {
   const signature = req.headers["stripe-signature"];
+
   let event;
+
   try {
     //zbog ovoga sam u app.js radi sirovi post...jer mi treba raw data u ovome trenutku prije nego ga ostali parseri pretvore u JSON
     event = stripe.webhooks.constructEvent(
@@ -98,6 +100,7 @@ exports.webhookCheckout = (req, res, next) => {
   }
 
   if (event.type === "checkout.session.completed") {
+    console.log("ide funkcija createBookingCheckout");
     createBookingCheckout(event.data.object);
   }
 
