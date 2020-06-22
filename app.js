@@ -8,6 +8,7 @@ const xss = require("xss-clean"); //10-22
 const hpp = require("hpp"); //10-23
 const cookieParser = require("cookie-parser"); //12-16
 const compression = require("compression"); //14-5
+const cors = require("cors"); // 14-9
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController"); //10-20
@@ -27,6 +28,21 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 //////////////////    GLOBAL MIDDLEWARES ////////////////////////////////////////////////////////
+//14-9 CORS
+app.use(cors()); // ovo je za sve
+/* npr za specifičnu domenu, samo sa nje primam zahtjeve
+  app.use(cors({
+    origin: 'https://www.nekadomena.com
+  }))
+*/
+
+//14-9 za sve složenije requestove, put,patch,delete...jednostavni GET i POSt prolaze preko CORSa
+// browser pošalje options request u PRE_FLIGHT fazi
+// moram odgovoriti na svim rutama
+app.options("*", cors());
+//ovo sam mogao i samo za spečifične rute npr:
+// app.options('/api/v1/tours/:id', cors())
+
 // serving static files...koristeći middleware
 app.use(express.static(path.join(__dirname, "/public")));
 //development log
