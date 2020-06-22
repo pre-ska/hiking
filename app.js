@@ -9,6 +9,7 @@ const hpp = require("hpp"); //10-23
 const cookieParser = require("cookie-parser"); //12-16
 const compression = require("compression"); //14-5
 const cors = require("cors"); // 14-9
+const bodyParser = require("body-parser"); //14-10
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController"); //10-20
@@ -73,7 +74,7 @@ app.use("/api", limiter);
 //zato ovo ide prije body paresera
 app.post(
   "/webhook-checkout",
-  express.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   bookingController.webhookCheckout
 );
 /*************************************/
