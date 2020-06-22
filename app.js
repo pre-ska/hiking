@@ -16,6 +16,7 @@ const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const bookingRouter = require("./routes/bookingRoutes");
+const bookingController = require("./controllers/bookingController");
 const viewRouter = require("./routes/viewRouter");
 
 const app = express();
@@ -64,7 +65,21 @@ const limiter = rateLimit({
 // taj middleware se odnosi na sve requestove koji idu u poddomenu /api
 app.use("/api", limiter);
 
-/********************************************/
+//14-10 ovo moram ovako a ne preko ubačiajenog postupa (router -> controller)
+// jer stripe doda nove stvari na body a u daljnjem kodu parseri pretvore body u JSON...tako da moram uhvatit te headere prije nego ih parseri sjebu
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }), // ovo parsira posebno body za STRIPE
+  bookingController.webhookCheckout
+);
+
+/********************************************************
+ ********************************************************
+ ********************************************************
+ ********************************************************
+ ********************************************************
+ ********************************************************/
+
 // body parser, reading data from the body into req.body
 app.use(
   express.json({

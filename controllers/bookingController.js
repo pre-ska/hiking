@@ -5,6 +5,7 @@ const Booking = require("../models/bookingModel");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const AppError = require("../utils/appError");
+const User = require("../models/userModel");
 
 /*
   u 13-17 sam dodao query string na success url
@@ -23,12 +24,20 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 2) create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    success_url: `${req.protocol}://${req.get("host")}/my-tours/?tour=${
-      req.params.tourId
-    }&user=${req.user.id}&price=${tour.price}`,
+
+    // success_url: `${req.protocol}://${req.get("host")}/my-tours/?tour=${
+    //   req.params.tourId
+    // }&user=${req.user.id}&price=${tour.price}`,
+    // 14-10 NETREBAM VIŠE QUERY PARAMETRE ZA SPREMANJE SESSIONA U DB
+    //JER KORISTIM WEBHOOK OD STIPE... u webhookCheckout() dolje niže funkcija
+    success_url: `${req.protocol}://${req.get("host")}/my-tours`,
+
     cancel_url: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`,
+
     customer_email: req.user.email,
+
     client_reference_id: req.params.tourId,
+
     line_items: [
       {
         name: `${tour.name} Tour`,
@@ -48,20 +57,52 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-//13-17
-exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-  // OVO JE SAMO PRIVREMENO
-  const { tour, user, price } = req.query;
+//14-10 netrebam ovo više.... koristim webhook od stripea
+// //13-17
+// exports.createBookingCheckout = catchAsync(async (req, res, next) => {
+//   // OVO JE SAMO PRIVREMENO
+//   const { tour, user, price } = req.query;
 
-  // ovo je na ruti GET "/"...ako nema ovih query stringova samo nastavi dalje normalno (viewRouter.js)
-  if (!tour || !user || !price) return next();
+//   // ovo je na ruti GET "/"...ako nema ovih query stringova samo nastavi dalje normalno (viewRouter.js)
+//   if (!tour || !user || !price) return next();
 
-  //ako ih ima spremi novi booking u DB
+//   //ako ih ima spremi novi booking u DB
+//   await Booking.create({ tour, user, price });
+
+//   // nakon snimanja redirektaj na rutu "/" BEZ!!! query stringova... u biti ista ta ruta bez ?...tour, price, user
+//   res.redirect(req.originalUrl.split("?")[0]);
+// });
+
+//14-10
+const createBookingCheckout = async (session) => {
+  const tour = session.client_reference_id;
+  const user = (await User.findOne({ email: session.customer_email })).id;
+  const price = session.line_items[0].amount / 100;
+
   await Booking.create({ tour, user, price });
+};
 
-  // nakon snimanja redirektaj na rutu "/" BEZ!!! query stringova... u biti ista ta ruta bez ?...tour, price, user
-  res.redirect(req.originalUrl.split("?")[0]);
-});
+//14-10
+exports.webhookCheckout = (req, res, next) => {
+  const signature = req.headers["stripe-signature"];
+  let event;
+  try {
+    //zbog ovoga sam u app.js radi sirovi post...jer mi treba raw data u ovome trenutku prije nego ga ostali parseri pretvore u JSON
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (error) {
+    return res.status(400).send(`Webhook error: ${error.message}`);
+  }
+
+  if (event.type === "checkout.session.completed") {
+    createBookingCheckout(event.data.object);
+  }
+
+  res.status(200).json({ received: true });
+};
 
 //13-19
 exports.createBooking = factory.createOne(Booking);

@@ -44,7 +44,7 @@ router.get("/me", authController.protect, viewsController.getAccount);
 //13-18
 router.get(
   "/my-tours",
-  bookingController.createBookingCheckout,
+  // bookingController.createBookingCheckout,
   authController.protect,
   viewsController.getMyTours
 );
