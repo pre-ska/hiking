@@ -6,6 +6,18 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Booking = require("../models/bookingModel");
 
+//14-10 za successp oruku nakon bookirane ture
+exports.alerts = (req, res, next) => {
+  const { alert } = req.query;
+
+  //stavljam na local varijablu alert zato što je mogu čitati iz templatea...iz JS-a filea za njega
+  if (alert === "booking") {
+    res.locals.alert = "Your booking was successful! Please check your email.";
+  }
+
+  next();
+};
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   // get all the tour data from collection
   const tours = await Tour.find();

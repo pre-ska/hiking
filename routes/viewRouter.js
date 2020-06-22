@@ -21,6 +21,9 @@ const router = express.Router();
 //   });
 // });
 
+//14-10 ovo je da prikaže success poruku nakon bookirane ture
+router.use(viewsController.alerts);
+
 //12-7
 router.get(
   "/",

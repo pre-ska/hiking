@@ -11,7 +11,8 @@ html(lang='en')
       link(rel='shortcut icon' type='image/png' href='img/favicon.png')
       link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700' rel='stylesheet')
 
-  body
+  //- data alert u 14-10
+  body(data-alert=`${alert ? alert : ''}`)
     // HEADER
     include _header
 

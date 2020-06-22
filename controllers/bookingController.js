@@ -30,7 +30,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // }&user=${req.user.id}&price=${tour.price}`,
     // 14-10 NETREBAM VIŠE QUERY PARAMETRE ZA SPREMANJE SESSIONA U DB
     //JER KORISTIM WEBHOOK OD STIPE... u webhookCheckout() dolje niže funkcija
-    success_url: `${req.protocol}://${req.get("host")}/my-tours`,
+    success_url: `${req.protocol}://${req.get("host")}/my-tours?alert=booking`,
 
     cancel_url: `${req.protocol}://${req.get("host")}/tour/${tour.slug}`,
 
@@ -42,7 +42,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       {
         name: `${tour.name} Tour`,
         description: tour.summary,
-        images: [`https://www.natours.dev/img/tours/${tour.imageCover}`],
+        images: [
+          `${req.protocol}://${req.get("host")}/img/tours/${tour.imageCover}`,
+        ],
         amount: tour.price * 100,
         currency: "usd",
         quantity: 1,

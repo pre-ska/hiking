@@ -5,6 +5,7 @@ import { login, logout } from "./login";
 import { signup } from "./signup";
 import { updateSettings } from "./updatedSettings";
 import { bookTour } from "./stripe"; //13-15
+import { showAlert } from "./alert";
 
 //get elements
 const mapBox = document.getElementById("map");
@@ -84,6 +85,10 @@ if (bookBtn) {
     bookTour(tourId);
   });
 }
+
+//14-10
+const alertmessage = document.getElementsByTagName("body")[0].dataset.alert;
+if (alertmessage) showAlert("success", alertMessage, 7);
 
 //ext
 if (signupForm) {
