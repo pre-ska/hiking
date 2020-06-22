@@ -16,6 +16,8 @@ const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const bookingRouter = require("./routes/bookingRoutes");
+const bookingController = require("./controllers/bookingController"); //14-10
+
 const viewRouter = require("./routes/viewRouter");
 
 const app = express();
@@ -66,6 +68,15 @@ const limiter = rateLimit({
 //10-20 naoravim middleware koji koristi limiter funkciju
 // taj middleware se odnosi na sve requestove koji idu u poddomenu /api
 app.use("/api", limiter);
+
+/*  14-10 dodatak za STRIPE web hook, ovo radim u app.je jer body mora biti stream a ne json */
+//zato ovo ide prije body paresera
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  bookingController.webhookCheckout
+);
+/*************************************/
 
 /********************************************/
 // body parser, reading data from the body into req.body
