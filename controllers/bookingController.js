@@ -77,16 +77,18 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = session.line_items[0].amount / 100;
+  const price = session.display_items[0].amount / 100;
   console.log(tour, user, price);
   await Booking.create({ tour, user, price });
 };
 
 //14-10
 exports.webhookCheckout = (req, res, next) => {
+  console.log("webhookCheckout");
   const signature = req.headers["stripe-signature"];
 
   let event;
+  console.log(signature);
 
   try {
     //zbog ovoga sam u app.js radi sirovi post...jer mi treba raw data u ovome trenutku prije nego ga ostali parseri pretvore u JSON
@@ -98,7 +100,7 @@ exports.webhookCheckout = (req, res, next) => {
   } catch (error) {
     return res.status(400).send(`Webhook error: ${error.message}`);
   }
-
+  console.log("event.type je ", event.type);
   if (event.type === "checkout.session.completed") {
     console.log("ide funkcija createBookingCheckout");
     createBookingCheckout(event.data.object);
