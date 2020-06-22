@@ -24,7 +24,7 @@ const router = express.Router();
 //12-7
 router.get(
   "/",
-  // bookingController.createBookingCheckout, // 13-17 privremeno riješenje za spremanje bookinga nakon transakcije
+  bookingController.createBookingCheckout, // 13-17 privremeno riješenje za spremanje bookinga nakon transakcije
   authController.isLoggedIn,
   viewsController.getOverview
 );
