@@ -59,4 +59,12 @@ router.post(
   viewsController.updateUserData
 );
 
+//ext
+router.get(
+  "/my-reviews",
+  // bookingController.createBookingCheckout,
+  authController.protect,
+  viewsController.getMyReviews
+);
+
 module.exports = router;

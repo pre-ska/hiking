@@ -1,0 +1,10 @@
+//-ext
+extends base
+
+include _reviewCard
+
+block content
+  section.section-my-reviews#reviewPage
+    .reviews
+      each review in reviews
+        +reviewCard(review)

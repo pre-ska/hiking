@@ -6,6 +6,7 @@ import { signup } from "./signup";
 import { updateSettings } from "./updatedSettings";
 import { bookTour } from "./stripe"; //13-15
 import { showAlert } from "./alert";
+import { reviews } from "./reviews";
 
 //get elements
 const mapBox = document.getElementById("map");
@@ -17,6 +18,7 @@ const userPasswordForm = document.getElementsByClassName(
 )[0]; //12-23
 const bookBtn = document.getElementById("book-tour"); //13-15
 const signupForm = document.getElementsByClassName("form--signup")[0];
+const reviewPage = document.getElementById("reviewPage");
 
 //delegation
 if (mapBox) {
@@ -111,4 +113,10 @@ if (signupForm) {
 
     signup(name, email, password, passwordConfirm);
   });
+}
+
+//ext
+if (reviewPage) {
+  console.log("ovo je reviewPage");
+  reviews();
 }

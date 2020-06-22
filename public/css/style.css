@@ -622,6 +622,12 @@ body {
   );
 }
 
+.section-my-reviews {
+  margin-top: 4rem;
+  z-index: 1000;
+  background: linear-gradient(to right bottom, #7dd56f, #28b487);
+}
+
 .reviews {
   padding: 5rem 0;
   display: grid;

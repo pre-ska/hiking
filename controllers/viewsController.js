@@ -5,6 +5,7 @@ const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Booking = require("../models/bookingModel");
+const Review = require("../models/reviewModel");
 
 //14-10 za successp oruku nakon bookirane ture
 exports.alerts = (req, res, next) => {
@@ -91,6 +92,26 @@ exports.getMyTours = catchAsync(async (req, res, next) => {
   res.status(200).render("overview", {
     title: "My Tours",
     tours,
+  });
+});
+
+//ext
+exports.getMyReviews = catchAsync(async (req, res, next) => {
+  const user = req.user;
+  // 1) find all reviews
+  const reviews = await Review.find({ user: req.user.id });
+  reviews.forEach((el) => (el.user = user));
+
+  // // 2) find toursIDs with IDs from reviews
+  // const tourIDs = reviewsArray.map((el) => el.tour);
+  // //- ovdje korsitim operator "in" jer reviewsArray je array - bulk find
+  // const tours = await Tour.find({ _id: { $in: tourIDs } });
+  // // console.log(tours);
+
+  // - za render ne radim novi template već ću iskoristiti "overview"
+  res.status(200).render("reviews", {
+    title: "My Reviews",
+    reviews,
   });
 });
 
