@@ -8,6 +8,7 @@ const xss = require("xss-clean"); //10-22
 const hpp = require("hpp"); //10-23
 const cookieParser = require("cookie-parser"); //12-16
 const compression = require("compression"); //14-5
+const cors = require("cors"); //14-10
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController"); //10-20
@@ -27,6 +28,18 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 //////////////////    GLOBAL MIDDLEWARES ////////////////////////////////////////////////////////
+//14-10
+app.use(cors()); // doda headere da server može odgovoriti za requestove od svih domena
+// ali ovo  radi samo za "simple requests" GET  i POST
+/* ako želim samo na pojedinoj domeni koristiti CORS - dozvoliti
+ app.use(cors{ origin: 'https://www.nekadomena.com})
+ */
+
+// non-simple requests (PUT,PATCH,DELETE, req sa cookies) zahtjeva pre-flight phase
+app.options("*", cors()); // na pre-flight moram odgovoriti sa options
+// app.options('/api/v1/tours/:id', cors()) // primjer za samo jednu rutu, samo sa nje se može poslati zahtjev PATCH,DELETE... sa drugog origina
+////////////////////////////////////////
+
 // serving static files...koristeći middleware
 app.use(express.static(path.join(__dirname, "/public")));
 //development log

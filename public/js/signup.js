@@ -6,6 +6,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
   if (password !== passwordConfirm) {
     const tg = document.getElementsByClassName("overlaySpin")[0];
     tg.parentNode.removeChild(tg);
+    document.getElementById("signupBtn").style.display = "none";
     return showAlert("error", "Passwords don't match");
   }
 
@@ -30,6 +31,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
   } catch (error) {
     const tg = document.getElementsByClassName("overlaySpin")[0];
     tg.parentNode.removeChild(tg);
+    document.getElementById("signupBtn").style.display = "none";
     showAlert("error", error.response.data.message);
   }
 };

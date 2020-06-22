@@ -8551,17 +8551,18 @@ var signup = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             if (!(password !== passwordConfirm)) {
-              _context.next = 4;
+              _context.next = 5;
               break;
             }
 
             tg = document.getElementsByClassName("overlaySpin")[0];
             tg.parentNode.removeChild(tg);
+            document.getElementById("signupBtn").style.display = "none";
             return _context.abrupt("return", (0, _alert.showAlert)("error", "Passwords don't match"));
 
-          case 4:
-            _context.prev = 4;
-            _context.next = 7;
+          case 5:
+            _context.prev = 5;
+            _context.next = 8;
             return (0, _axios.default)({
               method: "POST",
               url: "/api/v1/users/signup",
@@ -8573,7 +8574,7 @@ var signup = /*#__PURE__*/function () {
               }
             });
 
-          case 7:
+          case 8:
             res = _context.sent;
 
             // console.log("login.js #1", res.data);
@@ -8584,24 +8585,25 @@ var signup = /*#__PURE__*/function () {
               }, 1500);
             }
 
-            _context.next = 16;
+            _context.next = 18;
             break;
 
-          case 11:
-            _context.prev = 11;
-            _context.t0 = _context["catch"](4);
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](5);
             _tg = document.getElementsByClassName("overlaySpin")[0];
 
             _tg.parentNode.removeChild(_tg);
 
+            document.getElementById("signupBtn").style.display = "none";
             (0, _alert.showAlert)("error", _context.t0.response.data.message);
 
-          case 16:
+          case 18:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[4, 11]]);
+    }, _callee, null, [[5, 12]]);
   }));
 
   return function signup(_x, _x2, _x3, _x4) {
