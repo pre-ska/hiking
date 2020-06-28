@@ -16,7 +16,7 @@
   <img width="800" height="390" src="https://i.imgur.com/6a3srPj.png">
 </p>
 <p align="center">
-  <img width="800" height="390" src="https://i.imgur.com/5r2apo0.png">
+  <img width="800" height="390" src="https://i.imgur.com/z4TgNDw.png">
 </p>
 
 Technologies used in this project:
