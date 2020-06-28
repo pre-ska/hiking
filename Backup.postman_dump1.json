@@ -1,1362 +1,1354 @@
 {
-	"version": 1,
-	"collections": [
-		{
-			"id": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-			"name": "Hiking",
-			"description": "The Hiking APi contains endpoints for Tours, Users, and Reviews.",
-			"auth": null,
-			"events": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "131f118e-525a-4012-b2a0-02587ff0a44f",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "ff5ec05e-c940-4b8d-aa1a-94e6166e834c",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			],
-			"variables": [],
-			"order": [],
-			"folders_order": [
-				"d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-				"4bee7afc-9041-4ea2-80eb-aec59e564296",
-				"12e3e652-022d-4e74-8aed-17f91e43850e",
-				"6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-				"4c0725ab-b05c-4024-ae05-49347e66d820",
-				"39fb12e8-8749-4820-836d-a1d043389769"
-			],
-			"protocolProfileBehavior": {},
-			"folders": [
-				{
-					"id": "4c0725ab-b05c-4024-ae05-49347e66d820",
-					"name": "Authentication",
-					"description": null,
-					"auth": null,
-					"events": null,
-					"collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folder": null,
-					"order": [
-						"3fdea744-7805-4b54-aa2a-0af0d0341cef",
-						"c795d358-946b-4828-b8ea-e086cc7d94ab",
-						"eb5ed8a8-3c3d-4162-88b0-00f3187ae762",
-						"a7c678e6-5a3e-4937-b8b2-c14fc601bc55",
-						"a033c713-5ce9-4dbe-9907-90f102030d8f"
-					],
-					"folders_order": [],
-					"protocolProfileBehavior": {},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folderId": "4c0725ab-b05c-4024-ae05-49347e66d820"
-				},
-				{
-					"id": "39fb12e8-8749-4820-836d-a1d043389769",
-					"name": "Bookings",
-					"description": null,
-					"auth": null,
-					"events": null,
-					"collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folder": null,
-					"order": [
-						"ef205a38-1fbe-4d5e-9259-090aec81c29a",
-						"d4620220-f9b2-4388-b2bb-ba8903846e0d"
-					],
-					"folders_order": [],
-					"protocolProfileBehavior": {},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folderId": "39fb12e8-8749-4820-836d-a1d043389769"
-				},
-				{
-					"id": "4bee7afc-9041-4ea2-80eb-aec59e564296",
-					"name": "Reviews",
-					"description": null,
-					"auth": null,
-					"events": null,
-					"collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folder": null,
-					"order": [
-						"3a3c9efc-ba5f-442c-aa19-cb064ff85ef0",
-						"a2da6935-874c-46b2-8d2b-176b6b6a0827",
-						"c4e0bfbe-7d03-454b-b84a-9092d01bd057",
-						"65907418-103e-497e-85b6-41abae9abdcd",
-						"f0584d49-e10c-48fb-8e80-690db12618ac"
-					],
-					"folders_order": [],
-					"protocolProfileBehavior": {},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folderId": "4bee7afc-9041-4ea2-80eb-aec59e564296"
-				},
-				{
-					"id": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"name": "Tours",
-					"description": "**You can get all tours, create new ones, and edit and delete tours**. There are also special endpoints for some special requirements.",
-					"auth": null,
-					"events": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "aa6a2c7a-d9eb-4648-8d22-f51c32cebdbd",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "9d0c32d5-c51a-48e3-9b38-0e6388bb490a",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					],
-					"collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folder": null,
-					"order": [
-						"7d8e0604-aec9-43b2-b9b2-0c9200499979",
-						"76daff40-c443-4405-aa97-9d15b78ae187",
-						"de5664c5-4883-4e68-b6cd-e2bb590bf4df",
-						"46e38d00-e30a-4083-8ed2-4578e524eab1",
-						"9c5c4bdc-3527-4edd-b7ed-0a6d7efc46d7",
-						"51fe2678-cddc-46b3-a48f-66162a0b5a72",
-						"c98486f5-6173-4ad5-ae0c-2b6b30b2c1a6",
-						"78e814b3-472d-40c1-9178-d9d7893b0d9c",
-						"430942ae-7fa4-4187-b076-53c15bb1b560",
-						"336209f0-f78b-4615-bbb8-4bbb1eff204d"
-					],
-					"folders_order": [],
-					"protocolProfileBehavior": {},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folderId": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4"
-				},
-				{
-					"id": "12e3e652-022d-4e74-8aed-17f91e43850e",
-					"name": "Tours/Reviews",
-					"description": null,
-					"auth": null,
-					"events": null,
-					"collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folder": null,
-					"order": [
-						"018a7048-024e-49bb-b12e-d9aa16626576",
-						"a2458e52-639c-4438-8622-2e17a4fb3794"
-					],
-					"folders_order": [],
-					"protocolProfileBehavior": {},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folderId": "12e3e652-022d-4e74-8aed-17f91e43850e"
-				},
-				{
-					"id": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"name": "Users",
-					"description": null,
-					"auth": null,
-					"events": null,
-					"collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folder": null,
-					"order": [
-						"ae7b75b3-5b9d-47b5-8518-3eea1a3663bd",
-						"b32fa894-1def-4986-bee3-10d4674ddc3a",
-						"023df54b-4219-4ca5-be6f-267640d4a793",
-						"fc9aa259-5744-4779-8e05-20a0e41693af",
-						"2f65f8c8-afb5-4910-a21b-68d1688c3b46",
-						"d85d9a55-79f6-4b63-9951-74b4f42ea2d2",
-						"7163034f-2212-42e5-b88d-4fb7e7c4a7e1"
-					],
-					"folders_order": [],
-					"protocolProfileBehavior": {},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"folderId": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b"
-				}
-			],
-			"requests": [
-				{
-					"id": "018a7048-024e-49bb-b12e-d9aa16626576",
-					"name": "Create New Review on Tour",
-					"url": "{{URL}}api/v1/tours/5ee6777b0ac5c90830ac2329/reviews",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "POST",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "12e3e652-022d-4e74-8aed-17f91e43850e",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"rating\": 5,\n\t\"review\": \"Amazing\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "023df54b-4219-4ca5-be6f-267640d4a793",
-					"name": "Update User",
-					"url": "{{URL}}api/v1/users/5c8a23c82f8fb814b56fa18d",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "PATCH",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"role\": \"user\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "2f65f8c8-afb5-4910-a21b-68d1688c3b46",
-					"name": "Get Current User",
-					"url": "{{URL}}api/v1/users/me",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "336209f0-f78b-4615-bbb8-4bbb1eff204d",
-					"name": "Get Distances to Tours From Point",
-					"url": "{{URL}}api/v1/tours/distances/34.111745,-118.113491/unit/mi",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "3a3c9efc-ba5f-442c-aa19-cb064ff85ef0",
-					"name": "Get All Reviews",
-					"url": "{{URL}}api/v1/reviews",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "3fdea744-7805-4b54-aa2a-0af0d0341cef",
-					"name": "Sign Up",
-					"url": "{{URL}}api/v1/users/signup",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "POST",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9e20b00f-cec9-4e3e-8fe1-f9a701c55408",
-								"exec": [
-									"pm.environment.set(\"jwt\", pm.response.json().token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
-					"preRequestScript": null,
-					"tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"name\": \"NEW HACKER\",\n    \"email\": \"newhacker@hacker.com\",\n\t\"password\":  \"{{password}}\",\n\t\"passwordConfirm\": \"{{password}}\",\n\t\"role\": \"admin\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "430942ae-7fa4-4187-b076-53c15bb1b560",
-					"name": "Get Tours Within Radius",
-					"url": "{{URL}}api/v1/tours/tours-within/400/center/34.111745,-118.113491/unit/mi",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "46e38d00-e30a-4083-8ed2-4578e524eab1",
-					"name": "Update Tour",
-					"url": "{{URL}}api/v1/tours/5cdb06c8d87ca1051d90eda9",
-					"description": null,
-					"data": [
-						{
-							"key": "imageCover",
-							"value": [],
-							"type": "file"
-						},
-						{
-							"key": "images",
-							"value": [],
-							"type": "file"
-						},
-						{
-							"key": "images",
-							"value": [],
-							"type": "file"
-						},
-						{
-							"key": "images",
-							"value": [],
-							"type": "file"
-						},
-						{
-							"key": "price",
-							"value": "997",
-							"type": "text"
-						}
-					],
-					"dataOptions": null,
-					"dataMode": "params",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "PATCH",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "51fe2678-cddc-46b3-a48f-66162a0b5a72",
-					"name": "Get Top 5 Cheap Tours",
-					"url": "{{URL}}api/v1/tours/top-5-cheap",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "65907418-103e-497e-85b6-41abae9abdcd",
-					"name": "Update Review",
-					"url": "{{URL}}api/v1/reviews/5ee67d9354f1421bac33c534",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "PATCH",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"rating\": 1,\n\t\"review\": \"ewww ddddd\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "7163034f-2212-42e5-b88d-4fb7e7c4a7e1",
-					"name": "Delete Current User",
-					"url": "{{URL}}api/v1/users/deleteMe",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "DELETE",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "76daff40-c443-4405-aa97-9d15b78ae187",
-					"name": "Get Tour",
-					"url": "{{URL}}api/v1/tours/5ee6777b0ac5c90830ac2329",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}"
-							}
-						]
-					},
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "78e814b3-472d-40c1-9178-d9d7893b0d9c",
-					"name": "Get Tour Stats",
-					"url": "{{URL}}api/v1/tours/tour-stats",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "7d8e0604-aec9-43b2-b9b2-0c9200499979",
-					"name": "Get All Tours",
-					"url": "{{URL}}api/v1/tours?price[lt]=1000&ratingsAverage[gte]=4.7",
-					"description": "Use this endpoint to create a new tour.",
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [
-						{
-							"key": "duration[gte]",
-							"value": "7",
-							"equals": true,
-							"description": "Query for tour duration. Supports gte, lte, gt, lt operators.",
-							"enabled": false
-						},
-						{
-							"key": "sort",
-							"value": "price",
-							"equals": true,
-							"description": "",
-							"enabled": false
-						},
-						{
-							"key": "ratingsAverage[gte]",
-							"value": "4.7",
-							"equals": true,
-							"description": "",
-							"enabled": true
-						},
-						{
-							"key": "price[lt]",
-							"value": "1000",
-							"equals": true,
-							"description": "",
-							"enabled": true
-						}
-					],
-					"auth": null,
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "9c5c4bdc-3527-4edd-b7ed-0a6d7efc46d7",
-					"name": "Delete Tour",
-					"url": "{{URL}}api/v1/tours/5c88fa8cf4afda39709c295a",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "DELETE",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "a033c713-5ce9-4dbe-9907-90f102030d8f",
-					"name": "Update Current User Password",
-					"url": "{{URL}}api/v1/users/updateMyPassword",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "PATCH",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1b2d83d0-7801-4d05-a269-b38aa58e3c21",
-								"exec": [
-									"pm.environment.set(\"jwt\", pm.response.json().token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
-					"preRequestScript": null,
-					"tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"passwordCurrent\":  {{password}},\n\t\"password\": \"newpassword\",\n\t\"passwordConfirm\": \"newpassword\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "a2458e52-639c-4438-8622-2e17a4fb3794",
-					"name": "Get All Reviews on Tour",
-					"url": "{{URL}}api/v1/tours/5ee6777b0ac5c90830ac2329/reviews",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "12e3e652-022d-4e74-8aed-17f91e43850e",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "a2da6935-874c-46b2-8d2b-176b6b6a0827",
-					"name": "Get Review",
-					"url": "{{URL}}api/v1/reviews/5cd18f4e980a2725a50b3697",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "a7c678e6-5a3e-4937-b8b2-c14fc601bc55",
-					"name": "Reset Password",
-					"url": "{{URL}}api/v1/users/resetPassword/1652bfc347b939d3d19cea352d231d6dbe6dfef0884e68e6c61629019c44b9ca",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "PATCH",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9ac43cf5-bc8a-415d-844f-271b5805b39e",
-								"exec": [
-									"pm.environment.set(\"jwt\", pm.response.json().token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
-					"preRequestScript": null,
-					"tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"password\": \"newpassword\",\n\t\"passwordConfirm\": \"newpassword\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "ae7b75b3-5b9d-47b5-8518-3eea1a3663bd",
-					"name": "Get All Users",
-					"url": "{{URL}}api/v1/users?role=user",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [
-						{
-							"key": "role",
-							"value": "user"
-						}
-					],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "b32fa894-1def-4986-bee3-10d4674ddc3a",
-					"name": "Get User",
-					"url": "{{URL}}api/v1/users/2",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "c4e0bfbe-7d03-454b-b84a-9092d01bd057",
-					"name": "Create New Review",
-					"url": "{{URL}}api/v1/reviews",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "POST",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"review\": \"Loved it\",\n\t\"rating\": 4,\n\t\"tour\": \"5c88fa8cf4afda39709c2951\",\n\t\"user\": \"5cd14baa326b861fab416f56\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "c795d358-946b-4828-b8ea-e086cc7d94ab",
-					"name": "Login",
-					"url": "{{URL}}api/v1/users/login",
-					"description": null,
-					"data": [],
-					"dataOptions": {
-						"raw": {
-							"language": "json"
-						}
-					},
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/x-www-form-urlencoded",
-							"type": "text",
-							"enabled": false
-						}
-					],
-					"method": "POST",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "17539286-2404-4d28-af17-ea7250c6574d",
-								"exec": [
-									"pm.environment.set(\"jwt\", pm.response.json().token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
-					"preRequestScript": null,
-					"tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\r\n    \"email\": \"gazda@email.com\",\r\n    \"password\": \"{{password}}\"\r\n}",
-					"headers": "//Content-Type: application/x-www-form-urlencoded\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "c98486f5-6173-4ad5-ae0c-2b6b30b2c1a6",
-					"name": "Get Monthly Plan",
-					"url": "{{URL}}api/v1/tours/monthly-plan/2021",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "d4620220-f9b2-4388-b2bb-ba8903846e0d",
-					"name": "Get Booking",
-					"url": "{{URL}}api/v1/bookings/5ce3f70754eaa0063fd522e8",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "39fb12e8-8749-4820-836d-a1d043389769",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "d85d9a55-79f6-4b63-9951-74b4f42ea2d2",
-					"name": "Update Current User",
-					"url": "{{URL}}api/v1/users/updateMe",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "PATCH",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"name\": \"Jonas Schmedtmann\",\n\t\"role\": \"admin\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "de5664c5-4883-4e68-b6cd-e2bb590bf4df",
-					"name": "Create New Tour",
-					"url": "{{URL}}api/v1/tours",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "POST",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n    \"name\": \"New Test Tour\",\n    \"duration\": 1,\n    \"maxGroupSize\": 1,\n    \"difficulty\": \"easy\",\n    \"price\": 200,\n    \"summary\": \"Test tour\",\n    \"imageCover\": \"tour-3-cover.jpg\"\n\n }",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "eb5ed8a8-3c3d-4162-88b0-00f3187ae762",
-					"name": "Forgot Password",
-					"url": "{{URL}}api/v1/users/forgotPassword",
-					"description": null,
-					"data": [],
-					"dataOptions": null,
-					"dataMode": "raw",
-					"headerData": [
-						{
-							"key": "Content-Type",
-							"name": "Content-Type",
-							"value": "application/json",
-							"type": "text"
-						}
-					],
-					"method": "POST",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": null,
-					"events": null,
-					"folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
-					"currentHelper": null,
-					"helperAttributes": null,
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"rawModeData": "{\n\t\"email\": \"test@email.com\"\n}",
-					"headers": "Content-Type: application/json\n",
-					"pathVariables": {}
-				},
-				{
-					"id": "ef205a38-1fbe-4d5e-9259-090aec81c29a",
-					"name": "Get All Bookings",
-					"url": "{{URL}}api/v1/bookings",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "GET",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "39fb12e8-8749-4820-836d-a1d043389769",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "f0584d49-e10c-48fb-8e80-690db12618ac",
-					"name": "Delete Review",
-					"url": "{{URL}}api/v1/reviews/5ee6921b392a7c2880031a3d",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "DELETE",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				},
-				{
-					"id": "fc9aa259-5744-4779-8e05-20a0e41693af",
-					"name": "Delete User",
-					"url": "{{URL}}api/v1/users/5cd1a3b341c1d027493464e3",
-					"description": null,
-					"data": null,
-					"dataOptions": null,
-					"dataMode": null,
-					"headerData": [],
-					"method": "DELETE",
-					"pathVariableData": [],
-					"queryParams": [],
-					"auth": {
-						"type": "bearer",
-						"bearer": [
-							{
-								"key": "token",
-								"value": "{{jwt}}",
-								"type": "string"
-							}
-						]
-					},
-					"events": null,
-					"folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
-					"currentHelper": "bearerAuth",
-					"helperAttributes": {
-						"id": "bearer",
-						"token": "{{jwt}}"
-					},
-					"collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
-					"headers": "",
-					"pathVariables": {}
-				}
-			]
-		}
-	],
-	"environments": [
-		{
-			"id": "6e1c3cf1-2dbf-4337-9b69-93dcf1033934",
-			"name": "DEV hiking",
-			"values": [
-				{
-					"key": "URL",
-					"value": "http://127.0.0.1:3000/",
-					"enabled": true
-				},
-				{
-					"key": "jwt",
-					"value": "",
-					"enabled": true
-				},
-				{
-					"key": "password",
-					"value": "test1234",
-					"enabled": true
-				}
-			]
-		},
-		{
-			"id": "e987cd62-0c93-469e-8446-edfc796ff96a",
-			"name": "Hiking Production",
-			"values": [
-				{
-					"key": "URL",
-					"value": "https://preska-hiking.herokuapp.com",
-					"enabled": true
-				},
-				{
-					"key": "password",
-					"value": "test1234",
-					"enabled": true
-				}
-			]
-		},
-		{
-			"id": "59fab9fd-ec88-4805-a63b-3cb86371481c",
-			"name": "Hiking - express tut - globals",
-			"values": []
-		}
-	],
-	"headerPresets": [],
-	"globals": []
+  "version": 1,
+  "collections": [
+    {
+      "id": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+      "name": "Hiking",
+      "description": "The Hiking APi contains endpoints for Tours, Users, and Reviews.",
+      "auth": null,
+      "events": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "131f118e-525a-4012-b2a0-02587ff0a44f",
+            "type": "text/javascript",
+            "exec": [""]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "ff5ec05e-c940-4b8d-aa1a-94e6166e834c",
+            "type": "text/javascript",
+            "exec": [""]
+          }
+        }
+      ],
+      "variables": [],
+      "order": [],
+      "folders_order": [
+        "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+        "4bee7afc-9041-4ea2-80eb-aec59e564296",
+        "12e3e652-022d-4e74-8aed-17f91e43850e",
+        "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+        "4c0725ab-b05c-4024-ae05-49347e66d820",
+        "39fb12e8-8749-4820-836d-a1d043389769"
+      ],
+      "protocolProfileBehavior": {},
+      "folders": [
+        {
+          "id": "4c0725ab-b05c-4024-ae05-49347e66d820",
+          "name": "Authentication",
+          "description": null,
+          "auth": null,
+          "events": null,
+          "collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folder": null,
+          "order": [
+            "3fdea744-7805-4b54-aa2a-0af0d0341cef",
+            "c795d358-946b-4828-b8ea-e086cc7d94ab",
+            "eb5ed8a8-3c3d-4162-88b0-00f3187ae762",
+            "a7c678e6-5a3e-4937-b8b2-c14fc601bc55",
+            "a033c713-5ce9-4dbe-9907-90f102030d8f"
+          ],
+          "folders_order": [],
+          "protocolProfileBehavior": {},
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folderId": "4c0725ab-b05c-4024-ae05-49347e66d820"
+        },
+        {
+          "id": "39fb12e8-8749-4820-836d-a1d043389769",
+          "name": "Bookings",
+          "description": null,
+          "auth": null,
+          "events": null,
+          "collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folder": null,
+          "order": [
+            "ef205a38-1fbe-4d5e-9259-090aec81c29a",
+            "d4620220-f9b2-4388-b2bb-ba8903846e0d"
+          ],
+          "folders_order": [],
+          "protocolProfileBehavior": {},
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folderId": "39fb12e8-8749-4820-836d-a1d043389769"
+        },
+        {
+          "id": "4bee7afc-9041-4ea2-80eb-aec59e564296",
+          "name": "Reviews",
+          "description": null,
+          "auth": null,
+          "events": null,
+          "collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folder": null,
+          "order": [
+            "3a3c9efc-ba5f-442c-aa19-cb064ff85ef0",
+            "a2da6935-874c-46b2-8d2b-176b6b6a0827",
+            "c4e0bfbe-7d03-454b-b84a-9092d01bd057",
+            "65907418-103e-497e-85b6-41abae9abdcd",
+            "f0584d49-e10c-48fb-8e80-690db12618ac"
+          ],
+          "folders_order": [],
+          "protocolProfileBehavior": {},
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folderId": "4bee7afc-9041-4ea2-80eb-aec59e564296"
+        },
+        {
+          "id": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "name": "Tours",
+          "description": "**You can get all tours, create new ones, and edit and delete tours**. There are also special endpoints for some special requirements.",
+          "auth": null,
+          "events": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "aa6a2c7a-d9eb-4648-8d22-f51c32cebdbd",
+                "type": "text/javascript",
+                "exec": [""]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "9d0c32d5-c51a-48e3-9b38-0e6388bb490a",
+                "type": "text/javascript",
+                "exec": [""]
+              }
+            }
+          ],
+          "collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folder": null,
+          "order": [
+            "7d8e0604-aec9-43b2-b9b2-0c9200499979",
+            "76daff40-c443-4405-aa97-9d15b78ae187",
+            "de5664c5-4883-4e68-b6cd-e2bb590bf4df",
+            "46e38d00-e30a-4083-8ed2-4578e524eab1",
+            "9c5c4bdc-3527-4edd-b7ed-0a6d7efc46d7",
+            "51fe2678-cddc-46b3-a48f-66162a0b5a72",
+            "c98486f5-6173-4ad5-ae0c-2b6b30b2c1a6",
+            "78e814b3-472d-40c1-9178-d9d7893b0d9c",
+            "430942ae-7fa4-4187-b076-53c15bb1b560",
+            "336209f0-f78b-4615-bbb8-4bbb1eff204d"
+          ],
+          "folders_order": [],
+          "protocolProfileBehavior": {},
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folderId": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4"
+        },
+        {
+          "id": "12e3e652-022d-4e74-8aed-17f91e43850e",
+          "name": "Tours/Reviews",
+          "description": null,
+          "auth": null,
+          "events": null,
+          "collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folder": null,
+          "order": [
+            "018a7048-024e-49bb-b12e-d9aa16626576",
+            "a2458e52-639c-4438-8622-2e17a4fb3794"
+          ],
+          "folders_order": [],
+          "protocolProfileBehavior": {},
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folderId": "12e3e652-022d-4e74-8aed-17f91e43850e"
+        },
+        {
+          "id": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "name": "Users",
+          "description": null,
+          "auth": null,
+          "events": null,
+          "collection": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folder": null,
+          "order": [
+            "ae7b75b3-5b9d-47b5-8518-3eea1a3663bd",
+            "b32fa894-1def-4986-bee3-10d4674ddc3a",
+            "023df54b-4219-4ca5-be6f-267640d4a793",
+            "fc9aa259-5744-4779-8e05-20a0e41693af",
+            "2f65f8c8-afb5-4910-a21b-68d1688c3b46",
+            "d85d9a55-79f6-4b63-9951-74b4f42ea2d2",
+            "7163034f-2212-42e5-b88d-4fb7e7c4a7e1"
+          ],
+          "folders_order": [],
+          "protocolProfileBehavior": {},
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "folderId": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b"
+        }
+      ],
+      "requests": [
+        {
+          "id": "018a7048-024e-49bb-b12e-d9aa16626576",
+          "name": "Create New Review on Tour",
+          "url": "{{URL}}api/v1/tours/5ee6777b0ac5c90830ac2329/reviews",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "POST",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "12e3e652-022d-4e74-8aed-17f91e43850e",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"rating\": 5,\n\t\"review\": \"Amazing\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "023df54b-4219-4ca5-be6f-267640d4a793",
+          "name": "Update User",
+          "url": "{{URL}}api/v1/users/5c8a23c82f8fb814b56fa18d",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "PATCH",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"role\": \"user\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "2f65f8c8-afb5-4910-a21b-68d1688c3b46",
+          "name": "Get Current User",
+          "url": "{{URL}}api/v1/users/me",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "336209f0-f78b-4615-bbb8-4bbb1eff204d",
+          "name": "Get Distances to Tours From Point",
+          "url": "{{URL}}api/v1/tours/distances/34.111745,-118.113491/unit/mi",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "3a3c9efc-ba5f-442c-aa19-cb064ff85ef0",
+          "name": "Get All Reviews",
+          "url": "{{URL}}api/v1/reviews",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "3fdea744-7805-4b54-aa2a-0af0d0341cef",
+          "name": "Sign Up",
+          "url": "{{URL}}api/v1/users/signup",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "POST",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "9e20b00f-cec9-4e3e-8fe1-f9a701c55408",
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
+          "preRequestScript": null,
+          "tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"name\": \"NEW HACKER\",\n    \"email\": \"newhacker@hacker.com\",\n\t\"password\":  \"{{password}}\",\n\t\"passwordConfirm\": \"{{password}}\",\n\t\"role\": \"admin\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "430942ae-7fa4-4187-b076-53c15bb1b560",
+          "name": "Get Tours Within Radius",
+          "url": "{{URL}}api/v1/tours/tours-within/400/center/34.111745,-118.113491/unit/mi",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "46e38d00-e30a-4083-8ed2-4578e524eab1",
+          "name": "Update Tour",
+          "url": "{{URL}}api/v1/tours/5cdb06c8d87ca1051d90eda9",
+          "description": null,
+          "data": [
+            {
+              "key": "imageCover",
+              "value": [],
+              "type": "file"
+            },
+            {
+              "key": "images",
+              "value": [],
+              "type": "file"
+            },
+            {
+              "key": "images",
+              "value": [],
+              "type": "file"
+            },
+            {
+              "key": "images",
+              "value": [],
+              "type": "file"
+            },
+            {
+              "key": "price",
+              "value": "997",
+              "type": "text"
+            }
+          ],
+          "dataOptions": null,
+          "dataMode": "params",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "PATCH",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "51fe2678-cddc-46b3-a48f-66162a0b5a72",
+          "name": "Get Top 5 Cheap Tours",
+          "url": "{{URL}}api/v1/tours/top-5-cheap",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "65907418-103e-497e-85b6-41abae9abdcd",
+          "name": "Update Review",
+          "url": "{{URL}}api/v1/reviews/5ee67d9354f1421bac33c534",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "PATCH",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"rating\": 1,\n\t\"review\": \"ewww ddddd\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "7163034f-2212-42e5-b88d-4fb7e7c4a7e1",
+          "name": "Delete Current User",
+          "url": "{{URL}}api/v1/users/deleteMe",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "DELETE",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "76daff40-c443-4405-aa97-9d15b78ae187",
+          "name": "Get Tour",
+          "url": "{{URL}}api/v1/tours/5ee6777b0ac5c90830ac2329",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "78e814b3-472d-40c1-9178-d9d7893b0d9c",
+          "name": "Get Tour Stats",
+          "url": "{{URL}}api/v1/tours/tour-stats",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "7d8e0604-aec9-43b2-b9b2-0c9200499979",
+          "name": "Get All Tours",
+          "url": "{{URL}}api/v1/tours?price[lt]=1000&ratingsAverage[gte]=4.7",
+          "description": "Use this endpoint to create a new tour.",
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [
+            {
+              "key": "duration[gte]",
+              "value": "7",
+              "equals": true,
+              "description": "Query for tour duration. Supports gte, lte, gt, lt operators.",
+              "enabled": false
+            },
+            {
+              "key": "sort",
+              "value": "price",
+              "equals": true,
+              "description": "",
+              "enabled": false
+            },
+            {
+              "key": "ratingsAverage[gte]",
+              "value": "4.7",
+              "equals": true,
+              "description": "",
+              "enabled": true
+            },
+            {
+              "key": "price[lt]",
+              "value": "1000",
+              "equals": true,
+              "description": "",
+              "enabled": true
+            }
+          ],
+          "auth": null,
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "9c5c4bdc-3527-4edd-b7ed-0a6d7efc46d7",
+          "name": "Delete Tour",
+          "url": "{{URL}}api/v1/tours/5c88fa8cf4afda39709c295a",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "DELETE",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "a033c713-5ce9-4dbe-9907-90f102030d8f",
+          "name": "Update Current User Password",
+          "url": "{{URL}}api/v1/users/updateMyPassword",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "PATCH",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "1b2d83d0-7801-4d05-a269-b38aa58e3c21",
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
+          "preRequestScript": null,
+          "tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"passwordCurrent\":  {{password}},\n\t\"password\": \"newpassword\",\n\t\"passwordConfirm\": \"newpassword\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "a2458e52-639c-4438-8622-2e17a4fb3794",
+          "name": "Get All Reviews on Tour",
+          "url": "{{URL}}api/v1/tours/5ee6777b0ac5c90830ac2329/reviews",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "12e3e652-022d-4e74-8aed-17f91e43850e",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "a2da6935-874c-46b2-8d2b-176b6b6a0827",
+          "name": "Get Review",
+          "url": "{{URL}}api/v1/reviews/5cd18f4e980a2725a50b3697",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "a7c678e6-5a3e-4937-b8b2-c14fc601bc55",
+          "name": "Reset Password",
+          "url": "{{URL}}api/v1/users/resetPassword/1652bfc347b939d3d19cea352d231d6dbe6dfef0884e68e6c61629019c44b9ca",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "PATCH",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "9ac43cf5-bc8a-415d-844f-271b5805b39e",
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
+          "preRequestScript": null,
+          "tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"password\": \"newpassword\",\n\t\"passwordConfirm\": \"newpassword\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "ae7b75b3-5b9d-47b5-8518-3eea1a3663bd",
+          "name": "Get All Users",
+          "url": "{{URL}}api/v1/users?role=user",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [
+            {
+              "key": "role",
+              "value": "user"
+            }
+          ],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "b32fa894-1def-4986-bee3-10d4674ddc3a",
+          "name": "Get User",
+          "url": "{{URL}}api/v1/users/2",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "c4e0bfbe-7d03-454b-b84a-9092d01bd057",
+          "name": "Create New Review",
+          "url": "{{URL}}api/v1/reviews",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "POST",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"review\": \"Loved it\",\n\t\"rating\": 4,\n\t\"tour\": \"5c88fa8cf4afda39709c2951\",\n\t\"user\": \"5cd14baa326b861fab416f56\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "c795d358-946b-4828-b8ea-e086cc7d94ab",
+          "name": "Login",
+          "url": "{{URL}}api/v1/users/login",
+          "description": null,
+          "data": [],
+          "dataOptions": {
+            "raw": {
+              "language": "json"
+            }
+          },
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/x-www-form-urlencoded",
+              "type": "text",
+              "enabled": false
+            }
+          ],
+          "method": "POST",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "17539286-2404-4d28-af17-ea7250c6574d",
+                "exec": [
+                  "pm.environment.set(\"jwt\", pm.response.json().token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
+          "preRequestScript": null,
+          "tests": "pm.environment.set(\"jwt\", pm.response.json().token);",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\r\n    \"email\": \"gazda@email.com\",\r\n    \"password\": \"{{password}}\"\r\n}",
+          "headers": "//Content-Type: application/x-www-form-urlencoded\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "c98486f5-6173-4ad5-ae0c-2b6b30b2c1a6",
+          "name": "Get Monthly Plan",
+          "url": "{{URL}}api/v1/tours/monthly-plan/2021",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "d4620220-f9b2-4388-b2bb-ba8903846e0d",
+          "name": "Get Booking",
+          "url": "{{URL}}api/v1/bookings/5ce3f70754eaa0063fd522e8",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "39fb12e8-8749-4820-836d-a1d043389769",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "d85d9a55-79f6-4b63-9951-74b4f42ea2d2",
+          "name": "Update Current User",
+          "url": "{{URL}}api/v1/users/updateMe",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "PATCH",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"name\": \"addsa\",\n\t\"role\": \"admin\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "de5664c5-4883-4e68-b6cd-e2bb590bf4df",
+          "name": "Create New Tour",
+          "url": "{{URL}}api/v1/tours",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "POST",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "d4bf6e17-2e06-495d-a080-b54fb2ea0ba4",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n    \"name\": \"New Test Tour\",\n    \"duration\": 1,\n    \"maxGroupSize\": 1,\n    \"difficulty\": \"easy\",\n    \"price\": 200,\n    \"summary\": \"Test tour\",\n    \"imageCover\": \"tour-3-cover.jpg\"\n\n }",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "eb5ed8a8-3c3d-4162-88b0-00f3187ae762",
+          "name": "Forgot Password",
+          "url": "{{URL}}api/v1/users/forgotPassword",
+          "description": null,
+          "data": [],
+          "dataOptions": null,
+          "dataMode": "raw",
+          "headerData": [
+            {
+              "key": "Content-Type",
+              "name": "Content-Type",
+              "value": "application/json",
+              "type": "text"
+            }
+          ],
+          "method": "POST",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": null,
+          "events": null,
+          "folder": "4c0725ab-b05c-4024-ae05-49347e66d820",
+          "currentHelper": null,
+          "helperAttributes": null,
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "rawModeData": "{\n\t\"email\": \"test@email.com\"\n}",
+          "headers": "Content-Type: application/json\n",
+          "pathVariables": {}
+        },
+        {
+          "id": "ef205a38-1fbe-4d5e-9259-090aec81c29a",
+          "name": "Get All Bookings",
+          "url": "{{URL}}api/v1/bookings",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "GET",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "39fb12e8-8749-4820-836d-a1d043389769",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "f0584d49-e10c-48fb-8e80-690db12618ac",
+          "name": "Delete Review",
+          "url": "{{URL}}api/v1/reviews/5ee6921b392a7c2880031a3d",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "DELETE",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "4bee7afc-9041-4ea2-80eb-aec59e564296",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        },
+        {
+          "id": "fc9aa259-5744-4779-8e05-20a0e41693af",
+          "name": "Delete User",
+          "url": "{{URL}}api/v1/users/5cd1a3b341c1d027493464e3",
+          "description": null,
+          "data": null,
+          "dataOptions": null,
+          "dataMode": null,
+          "headerData": [],
+          "method": "DELETE",
+          "pathVariableData": [],
+          "queryParams": [],
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{jwt}}",
+                "type": "string"
+              }
+            ]
+          },
+          "events": null,
+          "folder": "6f30ecb3-a2a5-4a86-863f-a8f7749cf92b",
+          "currentHelper": "bearerAuth",
+          "helperAttributes": {
+            "id": "bearer",
+            "token": "{{jwt}}"
+          },
+          "collectionId": "0f437cc7-c43f-45ed-af59-459e75bf7cb6",
+          "headers": "",
+          "pathVariables": {}
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "id": "6e1c3cf1-2dbf-4337-9b69-93dcf1033934",
+      "name": "DEV hiking",
+      "values": [
+        {
+          "key": "URL",
+          "value": "http://127.0.0.1:3000/",
+          "enabled": true
+        },
+        {
+          "key": "jwt",
+          "value": "",
+          "enabled": true
+        },
+        {
+          "key": "password",
+          "value": "test1234",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "e987cd62-0c93-469e-8446-edfc796ff96a",
+      "name": "Hiking Production",
+      "values": [
+        {
+          "key": "URL",
+          "value": "https://preska-hiking.herokuapp.com",
+          "enabled": true
+        },
+        {
+          "key": "password",
+          "value": "test1234",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "59fab9fd-ec88-4805-a63b-3cb86371481c",
+      "name": "Hiking - express tut - globals",
+      "values": []
+    }
+  ],
+  "headerPresets": [],
+  "globals": []
 }
